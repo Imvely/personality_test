@@ -1,0 +1,40 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#gradient2)"/>
+
+  <!-- Main Content Area -->
+  <rect x="60" y="60" width="1080" height="510" fill="rgba(255,255,255,0.9)" rx="20"/>
+
+  <!-- Character -->
+  <circle cx="300" cy="315" r="80" fill="#667eea"/>
+  <ellipse cx="275" cy="295" rx="8" ry="12" fill="white"/>
+  <ellipse cx="325" cy="295" rx="8" ry="12" fill="white"/>
+  <ellipse cx="300" cy="330" rx="15" ry="12" fill="white" opacity="0.8"/>
+
+  <!-- Text Area -->
+  <text x="450" y="200" fill="#333" font-family="Arial, sans-serif" font-size="42" font-weight="bold">
+    MZ 퍼스널 심리테스트
+  </text>
+  <text x="450" y="250" fill="#666" font-family="Arial, sans-serif" font-size="24">
+    60초만에 알아보는 나의 캐릭터
+  </text>
+  <text x="450" y="300" fill="#667eea" font-family="Arial, sans-serif" font-size="20">
+    ✨ 동물 캐릭터로 표현하는 성격 분석
+  </text>
+  <text x="450" y="340" fill="#764ba2" font-family="Arial, sans-serif" font-size="20">
+    📱 SNS 공유 최적화 이미지
+  </text>
+
+  <!-- Bottom Info -->
+  <text x="450" y="420" fill="#999" font-family="Arial, sans-serif" font-size="16">
+    로컬 파일 모드 - OG 이미지 플레이스홀더
+  </text>
+
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="gradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:0.1" />
+    </linearGradient>
+  </defs>
+</svg>

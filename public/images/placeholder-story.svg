@@ -1,0 +1,56 @@
+<svg width="720" height="1280" viewBox="0 0 720 1280" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="720" height="1280" fill="url(#gradient3)"/>
+
+  <!-- Main Content Area -->
+  <rect x="40" y="100" width="640" height="1080" fill="rgba(255,255,255,0.9)" rx="30"/>
+
+  <!-- Character -->
+  <circle cx="360" cy="400" r="100" fill="#667eea"/>
+  <ellipse cx="330" cy="375" rx="10" ry="15" fill="white"/>
+  <ellipse cx="390" cy="375" rx="10" ry="15" fill="white"/>
+  <ellipse cx="360" cy="415" rx="20" ry="15" fill="white" opacity="0.8"/>
+
+  <!-- Title -->
+  <text x="360" y="580" text-anchor="middle" fill="#333" font-family="Arial, sans-serif" font-size="32" font-weight="bold">
+    나는 어떤 캐릭터일까?
+  </text>
+
+  <!-- Subtitle -->
+  <text x="360" y="630" text-anchor="middle" fill="#667eea" font-family="Arial, sans-serif" font-size="24">
+    60초 심리테스트
+  </text>
+
+  <!-- Features -->
+  <text x="360" y="720" text-anchor="middle" fill="#666" font-family="Arial, sans-serif" font-size="18">
+    ✨ 8가지 동물 캐릭터
+  </text>
+  <text x="360" y="750" text-anchor="middle" fill="#666" font-family="Arial, sans-serif" font-size="18">
+    🎯 정확한 성격 분석
+  </text>
+  <text x="360" y="780" text-anchor="middle" fill="#666" font-family="Arial, sans-serif" font-size="18">
+    📱 SNS 공유 최적화
+  </text>
+
+  <!-- CTA -->
+  <rect x="160" y="850" width="400" height="60" fill="#667eea" rx="30"/>
+  <text x="360" y="890" text-anchor="middle" fill="white" font-family="Arial, sans-serif" font-size="20" font-weight="bold">
+    테스트 시작하기 🚀
+  </text>
+
+  <!-- Bottom Info -->
+  <text x="360" y="1000" text-anchor="middle" fill="#999" font-family="Arial, sans-serif" font-size="14">
+    인스타그램 스토리용 이미지
+  </text>
+  <text x="360" y="1020" text-anchor="middle" fill="#999" font-family="Arial, sans-serif" font-size="14">
+    로컬 파일 모드
+  </text>
+
+  <!-- Gradient Definition -->
+  <defs>
+    <linearGradient id="gradient3" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:0.1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:0.1" />
+    </linearGradient>
+  </defs>
+</svg>

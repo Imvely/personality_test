@@ -1,0 +1,272 @@
+[
+  {
+    "id": 1,
+    "text": "주말 오후, 갑자기 친구가 파티에 초대했다면?",
+    "A_text": "즉석에서 바로 참석! 새로운 사람들을 만날 기회야",
+    "B_text": "미안, 오늘은 집에서 쉬고 싶어",
+    "A_trait": "extroversion",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 2,
+    "text": "새로운 앱을 다운받았을 때 나의 행동은?",
+    "A_text": "일단 이것저것 눌러보며 직접 탐험",
+    "B_text": "튜토리얼이나 가이드를 먼저 읽어봄",
+    "A_trait": "adventure",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 3,
+    "text": "친구가 고민을 털어놓을 때 나는?",
+    "A_text": "공감하며 감정을 함께 나누려고 노력",
+    "B_text": "현실적인 해결책을 제시해주려고 함",
+    "A_trait": "empathy",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 4,
+    "text": "새로운 취미를 시작한다면?",
+    "A_text": "아무도 안 해본 독특하고 창의적인 것",
+    "B_text": "많은 사람들이 즐기는 검증된 것",
+    "A_trait": "creativity",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 5,
+    "text": "여행 계획을 세울 때 나는?",
+    "A_text": "즉흥적으로 가서 현지에서 정하는 스타일",
+    "B_text": "미리 꼼꼼히 계획하고 예약하는 스타일",
+    "A_trait": "adventure",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 6,
+    "text": "회식 자리에서 나의 모습은?",
+    "A_text": "분위기를 주도하며 사람들과 활발히 대화",
+    "B_text": "조용히 앉아서 대화를 듣는 편",
+    "A_trait": "extroversion",
+    "B_trait": "empathy",
+    "weight": 1
+  },
+  {
+    "id": 7,
+    "text": "창작 활동을 할 때 나는?",
+    "A_text": "기존에 없던 완전히 새로운 방식을 시도",
+    "B_text": "검증된 방법을 참고해서 안전하게 진행",
+    "A_trait": "creativity",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 8,
+    "text": "극한 스포츠를 권유받는다면?",
+    "A_text": "와! 재밌겠다! 언제 할까?",
+    "B_text": "무서워서 못하겠어... 안전한 게 좋아",
+    "A_trait": "adventure",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 9,
+    "text": "팀 프로젝트에서 나의 역할은?",
+    "A_text": "팀원들과 소통하며 분위기를 이끌어가는 역할",
+    "B_text": "조용히 맡은 일을 완벽하게 해내는 역할",
+    "A_trait": "extroversion",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 10,
+    "text": "친구가 실연당해서 우울해한다면?",
+    "A_text": "함께 울어주며 위로하고 공감해줌",
+    "B_text": "새로운 활동을 제안하며 기분전환시켜줌",
+    "A_trait": "empathy",
+    "B_trait": "adventure",
+    "weight": 1
+  },
+  {
+    "id": 11,
+    "text": "새로운 카페를 발견했을 때?",
+    "A_text": "바로 들어가서 새로운 메뉴를 주문",
+    "B_text": "리뷰를 먼저 확인하고 신중히 결정",
+    "A_trait": "adventure",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 12,
+    "text": "예술 작품을 감상할 때 나는?",
+    "A_text": "작가의 감정과 내 감정을 연결지어 느낌",
+    "B_text": "기법이나 구성 등을 분석적으로 봄",
+    "A_trait": "empathy",
+    "B_trait": "creativity",
+    "weight": 1
+  },
+  {
+    "id": 13,
+    "text": "SNS에 올릴 사진을 고를 때?",
+    "A_text": "남들과 다른 독특하고 개성 있는 사진",
+    "B_text": "무난하고 예쁘게 나온 사진",
+    "A_trait": "creativity",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 14,
+    "text": "새로운 직장/학교 첫날?",
+    "A_text": "적극적으로 사람들에게 다가가서 인사",
+    "B_text": "조용히 상황을 파악하며 적응",
+    "A_trait": "extroversion",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 15,
+    "text": "친구와 의견이 다를 때 나는?",
+    "A_text": "친구의 입장을 이해하려고 노력하며 대화",
+    "B_text": "논리적으로 내 의견을 설명하려고 함",
+    "A_trait": "empathy",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 16,
+    "text": "휴가 때 하고 싶은 일은?",
+    "A_text": "아무도 가보지 않은 숨겨진 장소 탐험",
+    "B_text": "편안하고 안전한 곳에서 힐링",
+    "A_trait": "adventure",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 17,
+    "text": "방을 꾸밀 때 나의 스타일은?",
+    "A_text": "개성 넘치는 독특한 소품들로 꾸미기",
+    "B_text": "깔끔하고 실용적인 가구들로 정리",
+    "A_trait": "creativity",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 18,
+    "text": "파티에서 나는 주로?",
+    "A_text": "여러 사람들과 돌아다니며 대화",
+    "B_text": "친한 몇 명과 깊은 이야기를 나눔",
+    "A_trait": "extroversion",
+    "B_trait": "empathy",
+    "weight": 1
+  },
+  {
+    "id": 19,
+    "text": "새로운 음식을 시도할 때?",
+    "A_text": "호기심이 생기면 바로 도전!",
+    "B_text": "신중히 생각하고 익숙한 맛부터",
+    "A_trait": "adventure",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 20,
+    "text": "선물을 준비할 때 나는?",
+    "A_text": "상대방의 마음을 헤아려 정성스럽게 준비",
+    "B_text": "실용적이고 유용한 것을 선택",
+    "A_trait": "empathy",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 21,
+    "text": "새로운 아이디어가 떠올랐을 때?",
+    "A_text": "바로 실행해보고 싶어서 안달",
+    "B_text": "신중히 검토하고 계획을 세워봄",
+    "A_trait": "creativity",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 22,
+    "text": "모임에서 리더를 정해야 할 때?",
+    "A_text": "적극적으로 리더를 자처함",
+    "B_text": "다른 사람이 하기를 기다림",
+    "A_trait": "extroversion",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 23,
+    "text": "친구가 새로운 도전을 망설일 때?",
+    "A_text": "함께 모험을 떠나자고 격려",
+    "B_text": "신중하게 생각해보라고 조언",
+    "A_trait": "adventure",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 24,
+    "text": "슬픈 영화를 볼 때 나는?",
+    "A_text": "주인공과 함께 울며 감정이입",
+    "B_text": "객관적으로 스토리를 분석하며 감상",
+    "A_trait": "empathy",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 25,
+    "text": "옷을 고를 때 나의 기준은?",
+    "A_text": "남들과 다른 나만의 스타일 추구",
+    "B_text": "무난하고 어디에나 어울리는 스타일",
+    "A_trait": "creativity",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 26,
+    "text": "첫 만남에서 나는?",
+    "A_text": "먼저 다가가서 대화를 시작",
+    "B_text": "상대방이 먼저 말을 걸어주기를 기다림",
+    "A_trait": "extroversion",
+    "B_trait": "empathy",
+    "weight": 1
+  },
+  {
+    "id": 27,
+    "text": "위험해 보이지만 재미있어 보이는 일이 있다면?",
+    "A_text": "일단 해보고 생각하자!",
+    "B_text": "안전을 먼저 확인하고 신중히 결정",
+    "A_trait": "adventure",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 28,
+    "text": "친구의 고민을 들을 때?",
+    "A_text": "감정적으로 공감하며 마음을 어루만져줌",
+    "B_text": "해결방법을 함께 찾아보려고 노력",
+    "A_trait": "empathy",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 29,
+    "text": "새로운 프로젝트를 시작할 때?",
+    "A_text": "기존과 완전히 다른 참신한 방법으로",
+    "B_text": "검증된 방법을 응용해서 안전하게",
+    "A_trait": "creativity",
+    "B_trait": "stability",
+    "weight": 1
+  },
+  {
+    "id": 30,
+    "text": "주말 저녁 시간에 나는?",
+    "A_text": "친구들과 어울리며 시끌벅적하게",
+    "B_text": "혼자만의 시간을 가지며 충전",
+    "A_trait": "extroversion",
+    "B_trait": "stability",
+    "weight": 1
+  }
+]

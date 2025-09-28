@@ -1,0 +1,194 @@
+[
+  {
+    "id": "coffee_cat",
+    "name": "커피고양이형",
+    "prototype": {
+      "extroversion": 40,
+      "adventure": 30,
+      "stability": 75,
+      "empathy": 85,
+      "creativity": 70
+    },
+    "hook": "따뜻한 마음을 가진 감성적인 당신",
+    "short_summary": "조용하지만 깊은 감성을 가진 당신은 주변 사람들의 마음을 누구보다 잘 이해하는 따뜻한 사람입니다. 안정적인 환경에서 창의적인 에너지를 발휘하며, 진정성 있는 관계를 소중히 여깁니다.",
+    "paid_report": "커피고양이형인 당신은 마치 따뜻한 커피 한 잔처럼 주변 사람들에게 위안을 주는 존재입니다. 높은 공감 능력(85%)과 안정성 추구(75%)가 만나 깊이 있는 인간관계를 형성하며, 창의성(70%)을 통해 자신만의 독특한 세계관을 구축합니다. 당신은 큰 모임보다는 소수의 진정한 친구들과의 깊은 대화를 선호하며, 급작스러운 변화보다는 천천히 익숙해지는 과정을 통해 성장합니다. 직업적으로는 상담, 디자인, 글쓰기, 예술 분야에서 뛰어난 재능을 발휘할 수 있습니다.",
+    "image_prompts": {
+      "avatar": "A cute anthropomorphic cat character sitting comfortably with a steaming coffee cup, wearing a cozy sweater, warm color palette with browns and cream tones, gentle expression, soft lighting, digital illustration style",
+      "og": "Cozy coffee shop scene with a cat silhouette, warm ambient lighting, books and plants in background, steam rising from coffee cup, Instagram-worthy aesthetic, warm filter",
+      "story": "A peaceful scene of a cat character in a comfortable reading nook with coffee, surrounded by plants and soft cushions, golden hour lighting streaming through windows"
+    },
+    "colors": {
+      "primary": "#8B4513",
+      "secondary": "#D2B48C",
+      "accent": "#CD853F"
+    }
+  },
+  {
+    "id": "urban_fox",
+    "name": "도심여우형",
+    "prototype": {
+      "extroversion": 60,
+      "adventure": 80,
+      "stability": 55,
+      "empathy": 60,
+      "creativity": 75
+    },
+    "hook": "영리하고 적응력 뛰어난 도시의 탐험가",
+    "short_summary": "뛰어난 적응력과 모험심을 가진 당신은 도시의 모든 것을 탐험하고 즐기는 영리한 존재입니다. 창의적이고 사교적이며, 새로운 경험에 대한 열린 마음을 가지고 있습니다.",
+    "paid_report": "도심여우형인 당신은 현대 도시의 복잡함 속에서도 자신만의 길을 찾아가는 영리한 생존자입니다. 높은 모험심(80%)과 창의성(75%)으로 끊임없이 새로운 것을 추구하며, 적당한 사교성(60%)으로 다양한 사람들과 네트워킹을 형성합니다. 안정성(55%)이 중간 수준이어서 변화에 유연하게 대응하면서도 필요시 안정을 찾을 줄 아는 균형감을 가졌습니다. 창업, 마케팅, 예술, IT 분야에서 혁신적인 아이디어로 성공할 가능성이 높습니다.",
+    "image_prompts": {
+      "avatar": "A sleek urban fox character wearing trendy streetwear, city skyline background, confident pose, modern and stylish, cool color palette with oranges and grays",
+      "og": "Urban cityscape at dusk with fox silhouette, neon lights, modern architecture, street art vibes, vibrant colors",
+      "story": "A fox character exploring a vibrant city street with cafes, art galleries, and modern buildings, dynamic composition"
+    },
+    "colors": {
+      "primary": "#FF6B35",
+      "secondary": "#2C3E50",
+      "accent": "#F39C12"
+    }
+  },
+  {
+    "id": "adventure_rabbit",
+    "name": "모험토끼형",
+    "prototype": {
+      "extroversion": 80,
+      "adventure": 90,
+      "stability": 30,
+      "empathy": 50,
+      "creativity": 60
+    },
+    "hook": "에너지 넘치는 자유로운 영혼",
+    "short_summary": "끝없는 에너지와 모험심으로 가득한 당신은 항상 새로운 도전을 찾아 나서는 자유로운 영혼입니다. 사교적이고 활발하며, 일상의 틀을 벗어나 새로운 경험을 추구합니다.",
+    "paid_report": "모험토끼형인 당신은 최고 수준의 모험심(90%)과 외향성(80%)을 가진 진정한 자유로운 영혼입니다. 안정성이 낮아(30%) 루틴을 싫어하며 항상 새로운 자극과 변화를 추구합니다. 높은 사교성으로 어디서든 쉽게 친구를 사귀고, 중간 수준의 창의성(60%)으로 독특한 경험들을 만들어냅니다. 여행업, 이벤트 기획, 스포츠, 엔터테인먼트 분야에서 당신의 에너지가 빛을 발할 것입니다. 다만 장기적인 계획과 인내가 필요한 일에서는 의식적인 노력이 필요합니다.",
+    "image_prompts": {
+      "avatar": "An energetic rabbit character with a backpack, jumping or running pose, adventure gear, bright and vibrant colors, cheerful expression, cartoon style",
+      "og": "Outdoor adventure scene with mountains, trails, and a rabbit silhouette jumping, sunrise colors, dynamic composition",
+      "story": "A rabbit character at the peak of a mountain with arms raised in victory, breathtaking landscape view, inspiring and motivational mood"
+    },
+    "colors": {
+      "primary": "#27AE60",
+      "secondary": "#E74C3C",
+      "accent": "#F1C40F"
+    }
+  },
+  {
+    "id": "iron_bear",
+    "name": "철벽곰형",
+    "prototype": {
+      "extroversion": 30,
+      "adventure": 20,
+      "stability": 90,
+      "empathy": 70,
+      "creativity": 40
+    },
+    "hook": "든든하고 믿음직한 수호자",
+    "short_summary": "강한 안정성과 책임감을 가진 당신은 주변 사람들에게 든든한 버팀목이 되어주는 신뢰할 수 있는 존재입니다. 조용하지만 깊은 공감 능력으로 사람들을 보호하고 지지합니다.",
+    "paid_report": "철벽곰형인 당신은 최고 수준의 안정성(90%)과 높은 공감 능력(70%)을 가진 신뢰할 수 있는 수호자입니다. 낮은 외향성(30%)에도 불구하고 진정한 관계에서는 깊은 정을 나누며, 낮은 모험심(20%)은 오히려 신중함과 책임감으로 발현됩니다. 창의성이 상대적으로 낮지만(40%) 실용적이고 현실적인 해결책을 제시하는 데 뛰어납니다. 교육, 의료, 상담, 관리직에서 탁월한 능력을 발휘하며, 팀의 안정성과 지속성을 책임지는 핵심 인물이 될 수 있습니다.",
+    "image_prompts": {
+      "avatar": "A strong, protective bear character with gentle eyes, wearing earth-tone colors, calm and reassuring expression, solid and dependable appearance",
+      "og": "A serene forest scene with a bear silhouette, tall trees, peaceful atmosphere, earth tones and natural colors",
+      "story": "A bear character sitting peacefully by a campfire, surrounded by friends or family, warm and safe atmosphere, storytelling scene"
+    },
+    "colors": {
+      "primary": "#8B4513",
+      "secondary": "#228B22",
+      "accent": "#CD853F"
+    }
+  },
+  {
+    "id": "pixie_butterfly",
+    "name": "픽시버터플라이형",
+    "prototype": {
+      "extroversion": 50,
+      "adventure": 70,
+      "stability": 40,
+      "empathy": 65,
+      "creativity": 95
+    },
+    "hook": "꿈같은 상상력을 가진 예술가",
+    "short_summary": "최고 수준의 창의성과 예술적 감각을 가진 당신은 세상을 아름답고 독특한 시각으로 바라보는 몽환적인 존재입니다. 자유로운 영혼으로 새로운 아이디어를 끊임없이 창조합니다.",
+    "paid_report": "픽시버터플라이형인 당신은 최고 수준의 창의성(95%)을 가진 진정한 예술가입니다. 높은 모험심(70%)과 공감 능력(65%)이 결합되어 새로운 아이디어와 감성적 표현을 끊임없이 만들어냅니다. 중간 수준의 외향성(50%)으로 혼자만의 창작 시간과 사람들과의 교류 사이에서 균형을 찾으며, 낮은 안정성(40%)은 변화와 새로움을 추구하는 성향으로 나타납니다. 예술, 디자인, 광고, 콘텐츠 제작 분야에서 혁신적인 작품을 만들어낼 잠재력이 무궁무진합니다.",
+    "image_prompts": {
+      "avatar": "A whimsical butterfly-fairy character with iridescent wings, surrounded by sparkles and flowers, pastel colors, magical and dreamy atmosphere",
+      "og": "An enchanted garden with butterflies, colorful flowers, magical light effects, fantasy art style, vibrant pastels",
+      "story": "A fairy character creating art with magical powers, swirling colors and shapes around them, creative workshop setting"
+    },
+    "colors": {
+      "primary": "#9B59B6",
+      "secondary": "#E91E63",
+      "accent": "#00BCD4"
+    }
+  },
+  {
+    "id": "sharp_wolf",
+    "name": "까칠늑대형",
+    "prototype": {
+      "extroversion": 70,
+      "adventure": 60,
+      "stability": 50,
+      "empathy": 30,
+      "creativity": 55
+    },
+    "hook": "쿨하고 독립적인 개인주의자",
+    "short_summary": "강한 독립성과 현실적 사고를 가진 당신은 자신만의 확고한 기준으로 세상을 판단하는 쿨한 존재입니다. 리더십이 강하고 직설적이며, 효율성을 중시합니다.",
+    "paid_report": "까칠늑대형인 당신은 높은 외향성(70%)과 적당한 모험심(60%)을 가진 리더형 인물입니다. 낮은 공감 지수(30%)는 감정보다 논리를 우선시하는 현실적 성향으로 나타나며, 중간 수준의 안정성(50%)으로 필요시 변화를 받아들이되 자신만의 기준은 확고히 지킵니다. 창의성(55%)은 실용적이고 효율적인 방향으로 발휘됩니다. 경영, 컨설팅, 영업, 기술 분야에서 뛰어난 성과를 낼 수 있으며, 팀을 이끌고 목표를 달성하는 데 탁월한 능력을 가지고 있습니다.",
+    "image_prompts": {
+      "avatar": "A cool, confident wolf character wearing modern business attire or leather jacket, sharp features, determined expression, urban setting",
+      "og": "A wolf silhouette against a city skyline at night, cool blue and gray tones, modern and edgy aesthetic",
+      "story": "A wolf character in a leadership position, commanding respect, office or urban environment, professional and powerful mood"
+    },
+    "colors": {
+      "primary": "#34495E",
+      "secondary": "#95A5A6",
+      "accent": "#3498DB"
+    }
+  },
+  {
+    "id": "sweet_penguin",
+    "name": "스위트펭귄형",
+    "prototype": {
+      "extroversion": 55,
+      "adventure": 35,
+      "stability": 70,
+      "empathy": 90,
+      "creativity": 50
+    },
+    "hook": "다정하고 배려심 넘치는 힐러",
+    "short_summary": "최고 수준의 공감 능력과 따뜻한 마음을 가진 당신은 주변 사람들을 치유하고 위로해주는 천성적인 힐러입니다. 안정적이고 신뢰할 수 있으며, 조화로운 관계를 중시합니다.",
+    "paid_report": "스위트펭귄형인 당신은 최고 수준의 공감 능력(90%)과 높은 안정성(70%)을 가진 천성적인 힐러입니다. 적당한 외향성(55%)으로 사람들과 따뜻하게 어울리면서도 깊이 있는 관계를 형성하며, 낮은 모험심(35%)은 안전하고 편안한 환경을 선호하는 성향으로 나타납니다. 중간 수준의 창의성(50%)은 사람들을 돕고 위로하는 실용적인 방법들로 발현됩니다. 상담, 의료, 교육, 사회복지 분야에서 사람들에게 진정한 도움을 줄 수 있는 소중한 존재입니다.",
+    "image_prompts": {
+      "avatar": "A gentle, caring penguin character wearing soft pastel colors, warm smile, surrounded by hearts or caring symbols, approachable and friendly",
+      "og": "A cozy, warm scene with penguin family or friends, soft lighting, comfort and care theme, pastel color palette",
+      "story": "A penguin character helping or comforting others, community setting, warm and supportive atmosphere, acts of kindness"
+    },
+    "colors": {
+      "primary": "#3498DB",
+      "secondary": "#ECF0F1",
+      "accent": "#E74C3C"
+    }
+  },
+  {
+    "id": "hipster_bear",
+    "name": "힙스터곰치형",
+    "prototype": {
+      "extroversion": 45,
+      "adventure": 50,
+      "stability": 60,
+      "empathy": 55,
+      "creativity": 85
+    },
+    "hook": "개성 넘치는 문화 큐레이터",
+    "short_summary": "높은 창의성과 독특한 취향을 가진 당신은 문화와 예술을 사랑하며 자신만의 독특한 라이프스타일을 추구하는 개성 있는 존재입니다. 균형감 있고 심미적인 안목을 가지고 있습니다.",
+    "paid_report": "힙스터곰치형인 당신은 높은 창의성(85%)과 균형 잡힌 성격을 가진 문화적 감수성이 뛰어난 개인입니다. 모든 지표가 중간에서 높은 수준으로 골고루 분포되어 있어 안정적이면서도 흥미로운 성격을 가지고 있습니다. 적당한 외향성(45%)으로 선별적 사교를 즐기며, 중간 수준의 모험심(50%)과 안정성(60%)으로 새로운 것과 익숙한 것 사이의 완벽한 균형을 찾습니다. 공감 능력(55%)도 적절해 사람들과 깊이 있는 관계를 형성합니다. 문화 기획, 브랜딩, 큐레이팅, 라이프스타일 분야에서 독특하고 세련된 감각을 발휘할 수 있습니다.",
+    "image_prompts": {
+      "avatar": "A stylish bear character wearing hipster accessories like glasses and vintage clothing, artistic and trendy, coffee shop or bookstore setting",
+      "og": "An aesthetic flat lay with vintage items, books, coffee, plants, warm lighting, Instagram-worthy composition",
+      "story": "A bear character in an artistic workspace with vintage furniture, creative tools, plants, and books, cozy and inspiring atmosphere"
+    },
+    "colors": {
+      "primary": "#8E44AD",
+      "secondary": "#2C3E50",
+      "accent": "#E67E22"
+    }
+  }
+]

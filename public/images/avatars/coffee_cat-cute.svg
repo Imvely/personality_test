@@ -1,0 +1,48 @@
+<svg width="400" height="400" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="400" height="400" fill="linear-gradient(135deg, #8B4513 0%, #D2B48C 100%)"/>
+  <circle cx="200" cy="200" r="180" fill="rgba(139, 69, 19, 0.1)"/>
+
+  <!-- Cat Body -->
+  <ellipse cx="200" cy="240" rx="80" ry="60" fill="#8B4513"/>
+
+  <!-- Cat Head -->
+  <circle cx="200" cy="160" r="70" fill="#CD853F"/>
+
+  <!-- Cat Ears -->
+  <ellipse cx="160" cy="120" rx="20" ry="35" fill="#8B4513" transform="rotate(-30 160 120)"/>
+  <ellipse cx="240" cy="120" rx="20" ry="35" fill="#8B4513" transform="rotate(30 240 120)"/>
+
+  <!-- Inner Ears -->
+  <ellipse cx="165" cy="125" rx="8" ry="15" fill="#D2B48C" transform="rotate(-30 165 125)"/>
+  <ellipse cx="235" cy="125" rx="8" ry="15" fill="#D2B48C" transform="rotate(30 235 125)"/>
+
+  <!-- Eyes -->
+  <ellipse cx="180" cy="150" rx="12" ry="15" fill="#2F4F4F"/>
+  <ellipse cx="220" cy="150" rx="12" ry="15" fill="#2F4F4F"/>
+  <ellipse cx="182" cy="148" rx="4" ry="6" fill="white"/>
+  <ellipse cx="222" cy="148" rx="4" ry="6" fill="white"/>
+
+  <!-- Nose -->
+  <ellipse cx="200" cy="170" rx="4" ry="3" fill="#8B4513"/>
+
+  <!-- Mouth -->
+  <path d="M 200 175 Q 190 185 180 180" stroke="#8B4513" stroke-width="2" fill="none"/>
+  <path d="M 200 175 Q 210 185 220 180" stroke="#8B4513" stroke-width="2" fill="none"/>
+
+  <!-- Coffee Cup -->
+  <rect x="280" y="200" width="60" height="80" fill="#D2B48C" rx="8"/>
+  <rect x="285" y="205" width="50" height="60" fill="#8B4513"/>
+  <rect x="285" y="205" width="50" height="30" fill="#CD853F"/>
+  <ellipse cx="345" cy="235" rx="8" ry="12" fill="#D2B48C"/>
+
+  <!-- Steam -->
+  <path d="M 300 195 Q 305 185 300 175 Q 295 165 300 155" stroke="white" stroke-width="2" fill="none" opacity="0.7"/>
+  <path d="M 315 195 Q 320 185 315 175 Q 310 165 315 155" stroke="white" stroke-width="2" fill="none" opacity="0.7"/>
+
+  <!-- Whiskers -->
+  <line x1="130" y1="155" x2="170" y2="160" stroke="#8B4513" stroke-width="2"/>
+  <line x1="130" y1="165" x2="170" y2="165" stroke="#8B4513" stroke-width="2"/>
+  <line x1="230" y1="160" x2="270" y2="155" stroke="#8B4513" stroke-width="2"/>
+  <line x1="230" y1="165" x2="270" y2="165" stroke="#8B4513" stroke-width="2"/>
+</svg>

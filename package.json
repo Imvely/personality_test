@@ -1,0 +1,45 @@
+{
+  "name": "personality-test-app",
+  "version": "1.0.0",
+  "description": "MZ세대 타겟 60초 완료 퍼스널 심리테스트 서비스",
+  "main": "index.js",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "dependencies": {
+    "next": "^14.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "styled-components": "^6.0.0",
+    "framer-motion": "^10.0.0",
+    "react-share": "^4.4.1",
+    "axios": "^1.6.0",
+    "react-helmet": "^6.1.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "typescript": "^5.0.0",
+    "eslint": "^8.0.0",
+    "eslint-config-next": "^14.0.0",
+    "jest": "^29.0.0",
+    "@testing-library/react": "^13.0.0",
+    "@testing-library/jest-dom": "^6.0.0"
+  },
+  "keywords": [
+    "personality-test",
+    "psychology",
+    "MZ",
+    "quiz",
+    "react",
+    "nextjs"
+  ],
+  "author": "Personality Test Team",
+  "license": "MIT"
+}
