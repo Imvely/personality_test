@@ -1,10 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import Stripe from 'stripe';
 import { PaymentMetadata, PaymentProduct } from '@/utils/payment';
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2023-10-16',
-});
 
 interface RequestBody {
   productId: string;
@@ -75,75 +70,22 @@ export default async function handler(
       });
     }
 
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-
-    const session = await stripe.checkout.sessions.create({
-      payment_method_types: ['card'],
-      line_items: [
-        {
-          price_data: {
-            currency: product.currency.toLowerCase(),
-            product_data: {
-              name: product.name,
-              description: product.description,
-              images: [`${baseUrl}/product-${productId}.jpg`],
-            },
-            unit_amount: product.price,
-          },
-          quantity: 1,
-        },
-      ],
-      mode: 'payment',
-      success_url: successUrl || `${baseUrl}/payment/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: cancelUrl || `${baseUrl}/payment/cancel`,
-      customer_email: customerEmail,
-      metadata: {
-        productId,
-        archetypeId: metadata.archetypeId,
-        testResultId: metadata.testResultId,
-        sessionId: metadata.sessionId,
-        userId: metadata.userId || '',
-      },
-      payment_intent_data: {
-        metadata: {
-          productId,
-          archetypeId: metadata.archetypeId,
-          testResultId: metadata.testResultId,
-          sessionId: metadata.sessionId,
-          userId: metadata.userId || '',
-        },
-      },
-      expires_at: Math.floor(Date.now() / 1000) + (30 * 60), // 30분 후 만료
-      billing_address_collection: 'auto',
-      shipping_address_collection: {
-        allowed_countries: ['KR'], // 한국만 허용
-      },
-      locale: 'ko',
-      automatic_tax: {
-        enabled: false, // 한국 세금 처리 필요시 true로 변경
-      },
-    });
+    // 목업 결제 세션 생성
+    const sessionId = `mock_session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+    const clientSecret = `mock_secret_${sessionId}`;
 
     res.status(200).json({
       success: true,
-      sessionId: session.id,
-      clientSecret: session.client_secret
+      sessionId,
+      clientSecret
     });
 
   } catch (error) {
     console.error('Payment session creation error:', error);
-
-    if (error instanceof Stripe.errors.StripeError) {
-      res.status(400).json({
-        success: false,
-        error: error.message
-      });
-    } else {
-      res.status(500).json({
-        success: false,
-        error: 'Internal server error'
-      });
-    }
+    res.status(500).json({
+      success: false,
+      error: 'Internal server error'
+    });
   }
 }
 

@@ -2,11 +2,6 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import { llmGenerator } from '@/utils/llm';
 import { Archetype, NormalizedScores, GeneratedContent } from '@/types';
 import { paymentManager } from '@/utils/payment';
-import Stripe from 'stripe';
-
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: '2023-10-16',
-});
 
 interface RequestBody {
   sessionId: string;
@@ -53,10 +48,8 @@ export default async function handler(
       });
     }
 
-    // 결제 검증
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
-
-    if (!session || session.payment_status !== 'paid') {
+    // 목업 결제 검증 - mock session이면 항상 성공
+    if (!sessionId.startsWith('mock_session_')) {
       return res.status(403).json({
         success: false,
         error: 'Payment not verified'

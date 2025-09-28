@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { useSearchParams, useRouter } from 'next/navigation';
@@ -134,7 +134,7 @@ const LoadingSpinner = styled(motion.div)`
   margin-right: 10px;
 `;
 
-const PaymentSuccessPage: React.FC = () => {
+const PaymentSuccessContent: React.FC = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const [isVerifying, setIsVerifying] = useState(true);
@@ -142,7 +142,7 @@ const PaymentSuccessPage: React.FC = () => {
   const [isGeneratingReport, setIsGeneratingReport] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const sessionId = searchParams.get('session_id');
+  const sessionId = searchParams?.get('session_id');
 
   useEffect(() => {
     if (sessionId) {
@@ -369,6 +369,14 @@ const PaymentSuccessPage: React.FC = () => {
         </ButtonContainer>
       </SuccessCard>
     </SuccessContainer>
+  );
+};
+
+const PaymentSuccessPage: React.FC = () => {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PaymentSuccessContent />
+    </Suspense>
   );
 };
 

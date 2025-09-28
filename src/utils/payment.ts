@@ -1,14 +1,4 @@
-import { loadStripe, Stripe } from '@stripe/stripe-js';
 import { analytics } from './analytics';
-
-let stripePromise: Promise<Stripe | null>;
-
-const getStripe = () => {
-  if (!stripePromise) {
-    stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!);
-  }
-  return stripePromise;
-};
 
 export interface PaymentSession {
   sessionId: string;
@@ -85,22 +75,15 @@ export class PaymentManager {
     metadata: PaymentMetadata
   ): Promise<PaymentSession> {
     try {
-      const response = await fetch('/api/create-payment-session', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          productId,
-          metadata
-        }),
-      });
+      // 목업 결제 세션 생성
+      const sessionId = `mock_session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      const clientSecret = `mock_secret_${sessionId}`;
 
-      if (!response.ok) {
-        throw new Error('Failed to create payment session');
-      }
-
-      const session = await response.json();
+      const session: PaymentSession = {
+        sessionId,
+        clientSecret,
+        status: 'pending'
+      };
 
       analytics.track('payment_session_created', {
         product_id: productId,
@@ -118,18 +101,11 @@ export class PaymentManager {
 
   public async processPayment(sessionId: string): Promise<void> {
     try {
-      const stripe = await getStripe();
-      if (!stripe) {
-        throw new Error('Stripe initialization failed');
-      }
+      // 목업 결제 처리 - 항상 성공으로 시뮬레이션
+      await new Promise(resolve => setTimeout(resolve, 1000)); // 1초 지연으로 실제 결제 시뮬레이션
 
-      const { error } = await stripe.redirectToCheckout({
-        sessionId
-      });
-
-      if (error) {
-        throw new Error(error.message);
-      }
+      // 목업 성공 페이지로 리디렉션
+      window.location.href = `/payment/success?session_id=${sessionId}`;
 
     } catch (error) {
       console.error('Payment processing failed:', error);
@@ -143,20 +119,15 @@ export class PaymentManager {
 
   public async verifyPayment(sessionId: string): Promise<boolean> {
     try {
-      const response = await fetch('/api/verify-payment', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ sessionId }),
-      });
+      // 목업 결제 검증 - 항상 성공으로 시뮬레이션
+      await new Promise(resolve => setTimeout(resolve, 500)); // 0.5초 지연
 
-      if (!response.ok) {
-        throw new Error('Payment verification failed');
+      // mock session이면 항상 성공으로 처리
+      if (sessionId.startsWith('mock_session_')) {
+        return true;
       }
 
-      const result = await response.json();
-      return result.success && result.paid;
+      return false;
 
     } catch (error) {
       console.error('Payment verification failed:', error);
