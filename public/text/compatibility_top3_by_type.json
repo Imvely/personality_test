@@ -1,0 +1,138 @@
+{
+  "커피고양이형": [
+    {
+      "target": "스위트펭귄형",
+      "compat_percent": 76,
+      "explanation": "둘은 안정·공감에서 공통점이 있어 이해가 빠릅니다 (예상 궁합 76%)"
+    },
+    {
+      "target": "철벽곰형",
+      "compat_percent": 64,
+      "explanation": "둘은 안정·공감에서 공통점이 있어 이해가 빠릅니다 / 창의에서 서로 보완됩니다 (예상 궁합 64%)"
+    },
+    {
+      "target": "힙스터곰치형",
+      "compat_percent": 61,
+      "explanation": "둘은 창의에서 공통점이 있어 이해가 빠릅니다 (예상 궁합 61%)"
+    }
+  ],
+  "도심여우형": [
+    {
+      "target": "픽시버터플라이형",
+      "compat_percent": 73,
+      "explanation": "둘은 모험·창의에서 공통점이 있어 이해가 빠릅니다 (예상 궁합 73%)"
+    },
+    {
+      "target": "힙스터곰치형",
+      "compat_percent": 67,
+      "explanation": "둘은 창의에서 공통점이 있어 이해가 빠릅니다 (예상 궁합 67%)"
+    },
+    {
+      "target": "모험토끼형",
+      "compat_percent": 65,
+      "explanation": "둘은 모험에서 공통점이 있어 이해가 빠릅니다 (예상 궁합 65%)"
+    }
+  ],
+  "모험토끼형": [
+    {
+      "target": "도심여우형",
+      "compat_percent": 65,
+      "explanation": "둘은 모험에서 공통점이 있어 이해가 빠릅니다 (예상 궁합 65%)"
+    },
+    {
+      "target": "까칠늑대형",
+      "compat_percent": 61,
+      "explanation": "둘은 외향에서 공통점이 있어 이해가 빠릅니다 (예상 궁합 61%)"
+    },
+    {
+      "target": "픽시버터플라이형",
+      "compat_percent": 51,
+      "explanation": "둘은 모험에서 공통점이 있어 이해가 빠릅니다 (예상 궁합 51%)"
+    }
+  ],
+  "철벽곰형": [
+    {
+      "target": "커피고양이형",
+      "compat_percent": 64,
+      "explanation": "둘은 안정·공감에서 공통점이 있어 이해가 빠릅니다 / 창의에서 서로 보완됩니다 (예상 궁합 64%)"
+    },
+    {
+      "target": "스위트펭귄형",
+      "compat_percent": 61,
+      "explanation": "둘은 안정·공감에서 공통점이 있어 이해가 빠릅니다 (예상 궁합 61%)"
+    },
+    {
+      "target": "힙스터곰치형",
+      "compat_percent": 40,
+      "explanation": "창의에서 서로 보완됩니다 (예상 궁합 40%)"
+    }
+  ],
+  "픽시버터플라이형": [
+    {
+      "target": "도심여우형",
+      "compat_percent": 73,
+      "explanation": "둘은 모험·창의에서 공통점이 있어 이해가 빠릅니다 (예상 궁합 73%)"
+    },
+    {
+      "target": "힙스터곰치형",
+      "compat_percent": 71,
+      "explanation": "둘은 창의에서 공통점이 있어 이해가 빠릅니다 (예상 궁합 71%)"
+    },
+    {
+      "target": "모험토끼형",
+      "compat_percent": 51,
+      "explanation": "둘은 모험에서 공통점이 있어 이해가 빠릅니다 (예상 궁합 51%)"
+    }
+  ],
+  "까칠늑대형": [
+    {
+      "target": "도심여우형",
+      "compat_percent": 61,
+      "explanation": "성향이 달라 서로에게 신선한 자극을 줍니다 (예상 궁합 61%)"
+    },
+    {
+      "target": "모험토끼형",
+      "compat_percent": 61,
+      "explanation": "둘은 외향에서 공통점이 있어 이해가 빠릅니다 (예상 궁합 61%)"
+    },
+    {
+      "target": "힙스터곰치형",
+      "compat_percent": 55,
+      "explanation": "성향이 달라 서로에게 신선한 자극을 줍니다 (예상 궁합 55%)"
+    }
+  ],
+  "스위트펭귄형": [
+    {
+      "target": "커피고양이형",
+      "compat_percent": 76,
+      "explanation": "둘은 안정·공감에서 공통점이 있어 이해가 빠릅니다 (예상 궁합 76%)"
+    },
+    {
+      "target": "철벽곰형",
+      "compat_percent": 61,
+      "explanation": "둘은 안정·공감에서 공통점이 있어 이해가 빠릅니다 (예상 궁합 61%)"
+    },
+    {
+      "target": "힙스터곰치형",
+      "compat_percent": 51,
+      "explanation": "성향이 달라 서로에게 신선한 자극을 줍니다 (예상 궁합 51%)"
+    }
+  ],
+  "힙스터곰치형": [
+    {
+      "target": "픽시버터플라이형",
+      "compat_percent": 71,
+      "explanation": "둘은 창의에서 공통점이 있어 이해가 빠릅니다 (예상 궁합 71%)"
+    },
+    {
+      "target": "도심여우형",
+      "compat_percent": 67,
+      "explanation": "둘은 창의에서 공통점이 있어 이해가 빠릅니다 (예상 궁합 67%)"
+    },
+    {
+      "target": "커피고양이형",
+      "compat_percent": 61,
+      "explanation": "둘은 창의에서 공통점이 있어 이해가 빠릅니다 (예상 궁합 61%)"
+    }
+  ]
+}

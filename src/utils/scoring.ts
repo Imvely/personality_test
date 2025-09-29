@@ -1,8 +1,11 @@
 import { Question, UserAnswer, TraitScores, NormalizedScores, Archetype, TestResult } from '@/types';
-import questionsData from '@/data/questions.json';
-import archetypesData from '@/data/archetypes.json';
 
-export function calculateTraitScores(answers: UserAnswer[]): TraitScores {
+import archetypesData from '@/data/archetypes.json';
+import { loadMaxScores } from './questionsLoader';
+
+const TRAITS = ['extroversion', 'adventure', 'stability', 'empathy', 'creativity'] as const;
+
+export async function calculateTraitScores(answers: UserAnswer[], questions: Question[]): Promise<TraitScores> {
   const scores: TraitScores = {
     extroversion: 0,
     adventure: 0,
@@ -11,23 +14,22 @@ export function calculateTraitScores(answers: UserAnswer[]): TraitScores {
     creativity: 0
   };
 
-  const questions = questionsData as Question[];
-
   answers.forEach(userAnswer => {
     const question = questions.find(q => q.id === userAnswer.questionId);
     if (!question) return;
 
     const selectedTrait = userAnswer.answer === 'A' ? question.A_trait : question.B_trait;
-    scores[selectedTrait] += question.weight;
+    if (selectedTrait && scores.hasOwnProperty(selectedTrait)) {
+      scores[selectedTrait] += question.weight || 1; // 실제 weight 값 사용
+    }
   });
 
   return scores;
 }
 
-export function normalizeScores(traitScores: TraitScores, answers: UserAnswer[]): NormalizedScores {
-  const questions = questionsData as Question[];
-
-  const maxPossible = {
+// 질문 데이터로부터 실제 최대 점수를 계산하는 함수
+export function calculateActualMaxScores(questions: Question[]): TraitScores {
+  const maxScores: TraitScores = {
     extroversion: 0,
     adventure: 0,
     stability: 0,
@@ -36,16 +38,29 @@ export function normalizeScores(traitScores: TraitScores, answers: UserAnswer[])
   };
 
   questions.forEach(question => {
-    maxPossible[question.A_trait] += question.weight;
-    maxPossible[question.B_trait] += question.weight;
+    // A 특성의 최대 기여도 추가
+    if (question.A_trait && maxScores.hasOwnProperty(question.A_trait)) {
+      maxScores[question.A_trait] += question.weight || 1;
+    }
+    // B 특성의 최대 기여도 추가
+    if (question.B_trait && maxScores.hasOwnProperty(question.B_trait)) {
+      maxScores[question.B_trait] += question.weight || 1;
+    }
   });
 
+  return maxScores;
+}
+
+export async function normalizeScores(traitScores: TraitScores, questions: Question[]): Promise<NormalizedScores> {
+  // CSV에서 불러온 최대 점수 대신 실제 계산된 최대 점수 사용
+  const maxScores = calculateActualMaxScores(questions);
+
   const normalized: NormalizedScores = {
-    extroversion: Math.round((traitScores.extroversion / maxPossible.extroversion) * 100),
-    adventure: Math.round((traitScores.adventure / maxPossible.adventure) * 100),
-    stability: Math.round((traitScores.stability / maxPossible.stability) * 100),
-    empathy: Math.round((traitScores.empathy / maxPossible.empathy) * 100),
-    creativity: Math.round((traitScores.creativity / maxPossible.creativity) * 100)
+    extroversion: Math.min(100, Math.max(0, Math.round((traitScores.extroversion / maxScores.extroversion) * 100))),
+    adventure: Math.min(100, Math.max(0, Math.round((traitScores.adventure / maxScores.adventure) * 100))),
+    stability: Math.min(100, Math.max(0, Math.round((traitScores.stability / maxScores.stability) * 100))),
+    empathy: Math.min(100, Math.max(0, Math.round((traitScores.empathy / maxScores.empathy) * 100))),
+    creativity: Math.min(100, Math.max(0, Math.round((traitScores.creativity / maxScores.creativity) * 100)))
   };
 
   return normalized;
@@ -65,33 +80,39 @@ export function calculateEuclideanDistance(scores: NormalizedScores, prototype: 
 export function findMatchingArchetype(normalizedScores: NormalizedScores): TestResult {
   const archetypes = archetypesData as Archetype[];
 
-  const distances = archetypes.map(archetype => ({
-    archetype,
-    distance: calculateEuclideanDistance(normalizedScores, archetype.prototype)
-  }));
+  let best = null;
+  let minDist = Infinity;
 
-  distances.sort((a, b) => a.distance - b.distance);
+  archetypes.forEach(archetype => {
+    let dist = 0;
+    TRAITS.forEach(trait => {
+      const diff = normalizedScores[trait] - archetype.prototype[trait];
+      dist += diff * diff;
+    });
+    dist = Math.sqrt(dist);
 
-  const primaryMatch = distances[0];
-  const secondaryMatch = distances[1];
+    if (dist < minDist) {
+      minDist = dist;
+      best = archetype;
+    }
+  });
+
+  if (!best) {
+    throw new Error('No matching archetype found');
+  }
 
   const result: TestResult = {
-    archetype: primaryMatch.archetype,
+    archetype: best,
     scores: normalizedScores,
-    distance: primaryMatch.distance
+    distance: minDist
   };
-
-  if (secondaryMatch && (primaryMatch.distance - secondaryMatch.distance) < 50) {
-    result.secondaryArchetype = secondaryMatch.archetype;
-    result.secondaryDistance = secondaryMatch.distance;
-  }
 
   return result;
 }
 
-export function scoreAnswers(answers: UserAnswer[]): TestResult {
-  const traitScores = calculateTraitScores(answers);
-  const normalizedScores = normalizeScores(traitScores, answers);
+export async function scoreAnswers(answers: UserAnswer[], questions: Question[]): Promise<TestResult> {
+  const traitScores = await calculateTraitScores(answers, questions);
+  const normalizedScores = await normalizeScores(traitScores, questions);
   const result = findMatchingArchetype(normalizedScores);
 
   return result;

@@ -4,9 +4,9 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Question, UserAnswer } from '@/types';
-import questionsData from '@/data/questions.json';
 import { analytics, abTestManager } from '@/utils/analytics';
 import { scoreAnswers } from '@/utils/scoring';
+import { loadQuestions } from '@/utils/questionsLoader';
 import { useRouter } from 'next/navigation';
 
 const TestContainer = styled.div`
@@ -31,9 +31,19 @@ const TestCard = styled(motion.div)`
   min-height: 500px;
 
   @media (max-width: 768px) {
-    padding: 30px 25px;
+    padding: 25px 20px;
     border-radius: 20px;
     min-height: 450px;
+    margin: 15px;
+    width: calc(100% - 30px);
+  }
+
+  @media (max-width: 480px) {
+    padding: 20px 15px;
+    border-radius: 15px;
+    min-height: 400px;
+    margin: 10px;
+    width: calc(100% - 20px);
   }
 `;
 
@@ -116,9 +126,17 @@ const AnswerButton = styled(motion.button)<{ selected?: boolean }>`
   }
 
   @media (max-width: 768px) {
-    padding: 18px 20px;
+    padding: 16px 18px;
     font-size: 1rem;
-    min-height: 70px;
+    min-height: 65px;
+    border-radius: 12px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 15px 16px;
+    font-size: 0.9rem;
+    min-height: 60px;
+    border-radius: 10px;
   }
 `;
 
@@ -195,17 +213,26 @@ const TestPage: React.FC = () => {
   const [questionStartTime, setQuestionStartTime] = useState(Date.now());
 
   useEffect(() => {
-    const variant = abTestManager.getUserVariant();
-    const allQuestions = questionsData as Question[];
+    async function initializeTest() {
+      try {
+        const variant = abTestManager.getUserVariant();
+        const allQuestions = await loadQuestions();
 
-    const questionCount = variant.config.questionCount || 30;
-    const selectedQuestions = allQuestions.slice(0, questionCount);
+        const questionCount = variant.config.questionCount || 30;
+        const selectedQuestions = allQuestions.slice(0, questionCount);
 
-    setQuestions(selectedQuestions);
-    setStartTime(Date.now());
-    setQuestionStartTime(Date.now());
+        setQuestions(selectedQuestions);
+        setStartTime(Date.now());
+        setQuestionStartTime(Date.now());
 
-    analytics.trackPageView('test');
+        analytics.trackPageView('test');
+      } catch (error) {
+        console.error('Failed to load questions:', error);
+        // 에러 처리 - 사용자에게 알림 또는 기본값 설정
+      }
+    }
+
+    initializeTest();
   }, []);
 
   useEffect(() => {
@@ -270,34 +297,42 @@ const TestPage: React.FC = () => {
 
   const handlePrevious = () => {
     if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(currentQuestionIndex - 1);
-      // 이전 질문의 답변이 있다면 복원
-      const previousAnswer = answers[currentQuestionIndex - 1];
+      const newIndex = currentQuestionIndex - 1;
+      setCurrentQuestionIndex(newIndex);
+
+      // 답변 배열을 현재 인덱스까지만 유지 (뒤의 답변들 제거)
+      const updatedAnswers = answers.slice(0, newIndex);
+      setAnswers(updatedAnswers);
+
+      // 이전 질문의 답변이 있다면 복원, 없다면 null
+      const previousAnswer = updatedAnswers[newIndex];
       setSelectedAnswer(previousAnswer?.answer || null);
-      // 현재 질문의 답변이 저장되어 있다면 제거
-      if (answers.length > currentQuestionIndex) {
-        setAnswers(answers.slice(0, currentQuestionIndex));
-      }
     }
   };
 
-  const handleTestComplete = (finalAnswers: UserAnswer[]) => {
+  const handleTestComplete = async (finalAnswers: UserAnswer[]) => {
     setIsLoading(true);
 
-    const totalTime = Date.now() - startTime;
-    const result = scoreAnswers(finalAnswers);
+    try {
+      const totalTime = Date.now() - startTime;
+      const result = await scoreAnswers(finalAnswers, questions);
 
-    analytics.trackTestCompleted(
-      result.archetype.id,
-      totalTime,
-      questions.length
-    );
+      analytics.trackTestCompleted(
+        result.archetype.id,
+        totalTime,
+        questions.length
+      );
 
-    localStorage.setItem('testResult', JSON.stringify(result));
+      localStorage.setItem('testResult', JSON.stringify(result));
 
-    setTimeout(() => {
-      router.push('/result');
-    }, 2000);
+      setTimeout(() => {
+        router.push('/result');
+      }, 2000);
+    } catch (error) {
+      console.error('Failed to score answers:', error);
+      // 에러 처리 - 사용자에게 알림
+      setIsLoading(false);
+    }
   };
 
   const progress = ((currentQuestionIndex + 1) / questions.length) * 100;

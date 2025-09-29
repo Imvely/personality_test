@@ -26,6 +26,19 @@ export interface NormalizedScores {
   creativity: number;
 }
 
+export interface CompatibilityMatch {
+  id: string;
+  name: string;
+  percentage: number;
+  reason: string;
+}
+
+export interface CompatibilityInfo {
+  best_match: CompatibilityMatch;
+  good_matches: CompatibilityMatch[];
+  challenging_match: CompatibilityMatch;
+}
+
 export interface Archetype {
   id: string;
   name: string;
@@ -43,6 +56,7 @@ export interface Archetype {
     secondary: string;
     accent: string;
   };
+  compatibility?: CompatibilityInfo;
 }
 
 export interface TestResult {

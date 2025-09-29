@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { Archetype, NormalizedScores } from '@/types';
@@ -18,25 +18,52 @@ const ShareContainer = styled.div`
   align-items: center;
   gap: 20px;
   width: 100%;
+  padding: 25px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    padding: 20px;
+    gap: 15px;
+  }
 `;
 
 const ShareTitle = styled.h3`
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: #333;
   text-align: center;
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+  }
+`;
+
+const ShareSubtitle = styled.p`
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+  margin-bottom: 15px;
+
+  @media (max-width: 768px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const ShareButtonGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 15px;
+  display: flex;
+  gap: 20px;
   width: 100%;
   max-width: 500px;
+  justify-content: center;
 
   @media (max-width: 768px) {
-    grid-template-columns: repeat(2, 1fr);
+    flex-direction: column;
+    gap: 15px;
+    max-width: 280px;
   }
 `;
 
@@ -44,59 +71,68 @@ const ShareButton = styled(motion.button)<{ bgColor: string; textColor: string }
   background: ${props => props.bgColor};
   color: ${props => props.textColor};
   border: none;
-  border-radius: 15px;
-  padding: 15px 20px;
-  font-size: 0.9rem;
-  font-weight: 600;
+  border-radius: 20px;
+  padding: 16px 24px;
+  font-size: 1rem;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  min-height: 50px;
+  gap: 10px;
+  flex: 1;
+  min-height: 56px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 
   &:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 
   @media (max-width: 768px) {
-    padding: 12px 15px;
-    font-size: 0.8rem;
+    padding: 14px 20px;
+    font-size: 0.9rem;
+    min-height: 50px;
+    gap: 8px;
   }
 `;
 
-const CopyLinkButton = styled(motion.button)`
-  background: linear-gradient(45deg, #667eea, #764ba2);
+const CopiedMessage = styled(motion.div)`
+  background: #4CAF50;
   color: white;
-  border: none;
-  border-radius: 50px;
-  padding: 15px 30px;
-  font-size: 1rem;
+  padding: 10px 20px;
+  border-radius: 25px;
+  font-size: 0.9rem;
   font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 10px;
-
-  &:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
-  }
+  text-align: center;
 
   @media (max-width: 768px) {
-    padding: 12px 25px;
-    font-size: 0.9rem;
+    padding: 8px 16px;
+    font-size: 0.8rem;
   }
 `;
 
 const ShareButtons: React.FC<ShareButtonsProps> = ({ archetype, scores, characterEmoji }) => {
   const generateShareText = () => {
-    return `나는 ${archetype.name}! ${characterEmoji}\n${archetype.hook}\n\n60초만에 알아보는 나의 캐릭터 테스트 해보기 👇`;
+    const shareVariants = [
+      `나는 ${archetype.name}이라고 나왔는데 ${characterEmoji} 진짜 소름돋게 맞음... 너도 해봐`,
+      `${archetype.name} ${characterEmoji} 이거 나 맞냐고 ㅋㅋㅋ ${archetype.hook} 완전 공감`,
+      `심리테스트 결과: ${archetype.name} ${characterEmoji}\n${archetype.hook}\n이거 왜 이렇게 정확해??`,
+      `${characterEmoji} ${archetype.name} 나왔는데 진짜 찐이다... 60초면 끝나니까 너도 ㄱㄱ`,
+      `결과보고 헉소리남 ㅋㅋ ${archetype.name} ${characterEmoji}\n"${archetype.hook}"\n이건 완전 나잖아?`
+    ];
+
+    const randomVariant = shareVariants[Math.floor(Math.random() * shareVariants.length)];
+    return `${randomVariant}\n\n60초만에 알아보는 나의 캐릭터 테스트 👇`;
   };
 
   const generateHashtags = () => {
-    return `#${archetype.name} #심리테스트 #성격테스트 #MZ세대 #퍼스널테스트`;
+    return `#${archetype.name} #심리테스트 #성격테스트 #인스타감성 #퍼스널테스트`;
   };
 
   const shareUrl = typeof window !== 'undefined' ? window.location.origin : '';
@@ -131,41 +167,6 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({ archetype, scores, characte
     }
   };
 
-  const handleInstagramShare = () => {
-    analytics.trackResultShared(archetype.id, 'instagram');
-
-    const instagramUrl = `https://www.instagram.com/`;
-    const text = `${generateShareText()}\n\n${generateHashtags()}`;
-
-    if (navigator.share) {
-      navigator.share({
-        title: `나는 ${archetype.name}!`,
-        text,
-        url: shareUrl,
-      });
-    } else {
-      navigator.clipboard.writeText(`${text}\n\n${shareUrl}`);
-      alert('링크가 복사되었어요! 인스타그램에 붙여넣기 해주세요.');
-    }
-  };
-
-  const handleTwitterShare = () => {
-    analytics.trackResultShared(archetype.id, 'twitter');
-
-    const text = encodeURIComponent(generateShareText());
-    const hashtags = encodeURIComponent('심리테스트,성격테스트,MZ세대');
-    const url = encodeURIComponent(shareUrl);
-
-    const twitterUrl = `https://twitter.com/intent/tweet?text=${text}&hashtags=${hashtags}&url=${url}`;
-    window.open(twitterUrl, '_blank');
-  };
-
-  const handleFacebookShare = () => {
-    analytics.trackResultShared(archetype.id, 'facebook');
-
-    const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`;
-    window.open(facebookUrl, '_blank');
-  };
 
   const handleFallbackShare = (platform: string) => {
     const text = `${generateShareText()}\n\n${shareUrl}`;
@@ -208,47 +209,19 @@ const ShareButtons: React.FC<ShareButtonsProps> = ({ archetype, scores, characte
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          💬 카카오톡
+          💬 카카오톡으로 공유
         </ShareButton>
 
         <ShareButton
-          bgColor="#E4405F"
+          bgColor="#667eea"
           textColor="white"
-          onClick={handleInstagramShare}
+          onClick={handleCopyLink}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          📸 인스타그램
-        </ShareButton>
-
-        <ShareButton
-          bgColor="#1DA1F2"
-          textColor="white"
-          onClick={handleTwitterShare}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          🐦 트위터
-        </ShareButton>
-
-        <ShareButton
-          bgColor="#1877F2"
-          textColor="white"
-          onClick={handleFacebookShare}
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-        >
-          📘 페이스북
+          🔗 링크 복사하기
         </ShareButton>
       </ShareButtonGrid>
-
-      <CopyLinkButton
-        onClick={handleCopyLink}
-        whileHover={{ scale: 1.05 }}
-        whileTap={{ scale: 0.95 }}
-      >
-        🔗 링크 복사하기
-      </CopyLinkButton>
     </ShareContainer>
   );
 };

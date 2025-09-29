@@ -7,6 +7,12 @@ import { TestResult } from '@/types';
 import { analytics, abTestManager } from '@/utils/analytics';
 import { useRouter } from 'next/navigation';
 import ShareButtons from '@/components/ShareButtons';
+import { getDeepReport, cleanMZText, formatReportText, generateShareText } from '@/utils/reportsLoader';
+import {
+  getCompatibilityInfo as getNewCompatibilityInfo,
+  getCompatibilityMessage as getNewCompatibilityMessage,
+  getCompatibilityEmoji
+} from '@/utils/compatibilityLoader';
 
 const ResultContainer = styled.div`
   min-height: 100vh;
@@ -29,8 +35,17 @@ const ResultCard = styled(motion.div)<{ primaryColor: string }>`
   margin-bottom: 30px;
 
   @media (max-width: 768px) {
-    padding: 30px 25px;
+    padding: 25px 20px;
     border-radius: 20px;
+    margin: 15px;
+    width: calc(100% - 30px);
+  }
+
+  @media (max-width: 480px) {
+    padding: 20px 15px;
+    border-radius: 15px;
+    margin: 10px;
+    width: calc(100% - 20px);
   }
 `;
 
@@ -79,12 +94,13 @@ const Hook = styled(motion.p)<{ secondaryColor: string }>`
   }
 `;
 
-const Summary = styled(motion.p)`
+const Summary = styled(motion.div)`
   font-size: 1.2rem;
   color: #555;
   line-height: 1.8;
-  text-align: center;
+  text-align: left;
   margin-bottom: 40px;
+  white-space: pre-line;
 
   @media (max-width: 768px) {
     font-size: 1.1rem;
@@ -99,8 +115,13 @@ const TraitContainer = styled(motion.div)`
   margin-bottom: 40px;
 
   @media (max-width: 768px) {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
     gap: 15px;
+  }
+
+  @media (max-width: 480px) {
+    grid-template-columns: 1fr;
+    gap: 12px;
   }
 `;
 
@@ -197,6 +218,108 @@ const RestartButton = styled(motion.button)`
   }
 `;
 
+const CompatibilitySection = styled(motion.div)<{ accentColor: string }>`
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px;
+  padding: 30px;
+  margin: 30px 0;
+  border-left: 5px solid ${props => props.accentColor};
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+
+  @media (max-width: 768px) {
+    padding: 20px;
+    margin: 20px 0;
+  }
+`;
+
+const CompatibilityTitle = styled.h3`
+  color: #333;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+`;
+
+const BestMatchCard = styled(motion.div)<{ primaryColor: string }>`
+  background: linear-gradient(135deg, ${props => props.primaryColor}20, ${props => props.primaryColor}10);
+  border: 2px solid ${props => props.primaryColor};
+  border-radius: 15px;
+  padding: 20px;
+  margin: 15px 0;
+  text-align: center;
+`;
+
+const MatchName = styled.h4`
+  color: #333;
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+`;
+
+const MatchPercentage = styled.div<{ color: string }>`
+  font-size: 2rem;
+  font-weight: 800;
+  color: ${props => props.color};
+  margin: 10px 0;
+`;
+
+const MatchReason = styled.p`
+  color: #555;
+  font-size: 1rem;
+  line-height: 1.5;
+  margin: 10px 0;
+`;
+
+const GoodMatchesList = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 15px;
+  margin: 20px 0;
+
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  @media (max-width: 480px) {
+    gap: 10px;
+  }
+`;
+
+const GoodMatchCard = styled(motion.div)`
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 10px;
+  padding: 15px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+`;
+
+const RelationshipDetailsSection = styled.div`
+  margin-top: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 15px;
+`;
+
+const DetailItem = styled.div`
+  margin: 15px 0;
+`;
+
+const DetailLabel = styled.span`
+  font-weight: 700;
+  color: #333;
+  display: block;
+  margin-bottom: 5px;
+`;
+
+const DetailText = styled.span`
+  color: #555;
+  line-height: 1.5;
+`;
+
 const LoadingContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -247,19 +370,41 @@ const ResultPage: React.FC = () => {
   const router = useRouter();
   const [result, setResult] = useState<TestResult | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [deepReport, setDeepReport] = useState<string>('');
+  const [compatibility, setCompatibility] = useState<any[]>([]);
 
   useEffect(() => {
-    analytics.trackPageView('result');
+    async function loadResultData() {
+      analytics.trackPageView('result');
 
-    const savedResult = localStorage.getItem('testResult');
-    if (savedResult) {
-      const parsedResult = JSON.parse(savedResult) as TestResult;
-      setResult(parsedResult);
-      setIsLoading(false);
-    } else {
-      router.push('/');
+      const savedResult = localStorage.getItem('testResult');
+      if (savedResult) {
+        const parsedResult = JSON.parse(savedResult) as TestResult;
+        setResult(parsedResult);
+
+        try {
+          // 상세 리포트 로드
+          const reportData = await getDeepReport(parsedResult.archetype.id);
+          if (reportData) {
+            const cleanedText = cleanMZText(reportData.long_report);
+            const formattedText = formatReportText(cleanedText);
+            setDeepReport(formattedText);
+          }
+
+          // 궁합 데이터 로드
+          const compatibilityData = await getNewCompatibilityInfo(parsedResult.archetype.id);
+          setCompatibility(compatibilityData);
+        } catch (error) {
+          console.error('Failed to load additional data:', error);
+        }
+
+        setIsLoading(false);
+      } else {
+        router.push('/');
+      }
     }
 
+    loadResultData();
   }, [router]);
 
   const handleRestart = () => {
@@ -322,7 +467,7 @@ const ResultPage: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9 }}
         >
-          {archetype.short_summary}
+          {deepReport || archetype.short_summary}
         </Summary>
 
         <TraitContainer
@@ -370,6 +515,67 @@ const ResultPage: React.FC = () => {
             characterEmoji={characterEmoji}
           />
 
+          {/* 궁합 정보 섹션 */}
+          {compatibility.length > 0 && (
+            <CompatibilitySection
+              accentColor={archetype.colors.accent}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5 }}
+            >
+              <CompatibilityTitle>💖 나와 잘 맞는 친구들</CompatibilityTitle>
+
+              <GoodMatchesList>
+                {compatibility.map((match, index) => (
+                  <GoodMatchCard
+                    key={match.target}
+                    whileHover={{ scale: 1.05 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.6 + index * 0.1 }}
+                  >
+                    <div style={{ textAlign: 'center' }}>
+                      <span style={{ fontSize: '1.5rem', marginBottom: '8px', display: 'block' }}>
+                        {getCompatibilityEmoji(match.compat_percent)}
+                      </span>
+                      <MatchName style={{ fontSize: '1.2rem', marginBottom: '8px' }}>
+                        {match.targetName}
+                      </MatchName>
+                      <MatchPercentage
+                        color={archetype.colors.primary}
+                        style={{ fontSize: '1.8rem', margin: '8px 0' }}
+                      >
+                        {match.compat_percent}%
+                      </MatchPercentage>
+                      <MatchReason style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>
+                        {match.explanation}
+                      </MatchReason>
+                      <div style={{
+                        marginTop: '10px',
+                        fontSize: '0.8rem',
+                        color: archetype.colors.accent,
+                        fontWeight: '600'
+                      }}>
+                        {getNewCompatibilityMessage(match.compat_percent)}
+                      </div>
+                    </div>
+                  </GoodMatchCard>
+                ))}
+              </GoodMatchesList>
+
+              <div style={{
+                textAlign: 'center',
+                marginTop: '20px',
+                padding: '15px',
+                background: 'rgba(255, 255, 255, 0.5)',
+                borderRadius: '15px',
+                fontSize: '0.9rem',
+                color: '#666'
+              }}>
+                💡 친구들과 테스트 결과를 공유해서 궁합을 확인해보세요!
+              </div>
+            </CompatibilitySection>
+          )}
 
           <RestartButton
             onClick={handleRestart}

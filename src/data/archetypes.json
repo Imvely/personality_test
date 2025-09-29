@@ -21,6 +21,34 @@
       "primary": "#8B4513",
       "secondary": "#D2B48C",
       "accent": "#CD853F"
+    },
+    "compatibility": {
+      "best_match": {
+        "id": "iron_bear",
+        "name": "철벽곰형",
+        "percentage": 95,
+        "reason": "서로의 안정성과 공감 능력이 완벽하게 조화를 이루며, 깊고 신뢰할 수 있는 관계를 형성합니다."
+      },
+      "good_matches": [
+        {
+          "id": "sweet_penguin",
+          "name": "스위트펭귄형",
+          "percentage": 88,
+          "reason": "높은 공감 능력과 배려심으로 따뜻하고 편안한 관계"
+        },
+        {
+          "id": "hipster_bear",
+          "name": "힙스터곰치형",
+          "percentage": 82,
+          "reason": "창의성과 안정성의 균형으로 서로를 영감을 주는 관계"
+        }
+      ],
+      "challenging_match": {
+        "id": "adventure_rabbit",
+        "name": "모험토끼형",
+        "percentage": 45,
+        "reason": "활동성과 안정성 추구에서 차이가 있지만, 서로 다른 매력으로 배울 점이 많습니다."
+      }
     }
   },
   {
@@ -45,6 +73,34 @@
       "primary": "#FF6B35",
       "secondary": "#2C3E50",
       "accent": "#F39C12"
+    },
+    "compatibility": {
+      "best_match": {
+        "id": "pixie_butterfly",
+        "name": "픽시버터플라이형",
+        "percentage": 92,
+        "reason": "창의성과 모험심이 만나 끊임없이 새로운 아이디어와 경험을 함께 만들어가는 역동적인 관계입니다."
+      },
+      "good_matches": [
+        {
+          "id": "sharp_wolf",
+          "name": "까칠늑대형",
+          "percentage": 85,
+          "reason": "도시적 감각과 리더십으로 서로를 자극하는 파워풀한 관계"
+        },
+        {
+          "id": "adventure_rabbit",
+          "name": "모험토끼형",
+          "percentage": 78,
+          "reason": "모험심과 활동성으로 함께 새로운 도전을 즐기는 관계"
+        }
+      ],
+      "challenging_match": {
+        "id": "iron_bear",
+        "name": "철벽곰형",
+        "percentage": 38,
+        "reason": "변화를 추구하는 성향과 안정을 중시하는 성향의 차이가 있지만, 서로를 보완할 수 있습니다."
+      }
     }
   },
   {
@@ -69,6 +125,34 @@
       "primary": "#27AE60",
       "secondary": "#E74C3C",
       "accent": "#F1C40F"
+    },
+    "compatibility": {
+      "best_match": {
+        "id": "sharp_wolf",
+        "name": "까칠늑대형",
+        "percentage": 89,
+        "reason": "높은 에너지와 리더십이 만나 함께 세상을 정복해나가는 최강의 역동적 듀오입니다."
+      },
+      "good_matches": [
+        {
+          "id": "urban_fox",
+          "name": "도심여우형",
+          "percentage": 78,
+          "reason": "모험심과 도시적 감각으로 끊임없이 새로운 경험을 탐험하는 관계"
+        },
+        {
+          "id": "pixie_butterfly",
+          "name": "픽시버터플라이형",
+          "percentage": 74,
+          "reason": "자유로운 영혼끼리 서로의 창의성과 모험심을 응원하는 관계"
+        }
+      ],
+      "challenging_match": {
+        "id": "coffee_cat",
+        "name": "커피고양이형",
+        "percentage": 45,
+        "reason": "활동적인 성향과 조용한 성향의 차이가 있지만, 서로에게 새로운 관점을 제공할 수 있습니다."
+      }
     }
   },
   {
@@ -93,6 +177,34 @@
       "primary": "#8B4513",
       "secondary": "#228B22",
       "accent": "#CD853F"
+    },
+    "compatibility": {
+      "best_match": {
+        "id": "coffee_cat",
+        "name": "커피고양이형",
+        "percentage": 95,
+        "reason": "안정성과 공감 능력이 완벽하게 조화를 이루어 서로에게 최고의 안식처가 되는 관계입니다."
+      },
+      "good_matches": [
+        {
+          "id": "sweet_penguin",
+          "name": "스위트펭귄형",
+          "percentage": 91,
+          "reason": "공감 능력과 보호 본능으로 서로를 아끼고 돌보는 따뜻한 관계"
+        },
+        {
+          "id": "hipster_bear",
+          "name": "힙스터곰치형",
+          "percentage": 76,
+          "reason": "안정성과 창의성의 조화로 서로를 지지하며 성장하는 관계"
+        }
+      ],
+      "challenging_match": {
+        "id": "adventure_rabbit",
+        "name": "모험토끼형",
+        "percentage": 35,
+        "reason": "안정성과 모험심의 극명한 차이가 있지만, 서로의 다른 에너지로 균형을 찾을 수 있습니다."
+      }
     }
   },
   {
@@ -117,6 +229,34 @@
       "primary": "#9B59B6",
       "secondary": "#E91E63",
       "accent": "#00BCD4"
+    },
+    "compatibility": {
+      "best_match": {
+        "id": "urban_fox",
+        "name": "도심여우형",
+        "percentage": 92,
+        "reason": "창의성과 모험심이 완벽하게 시너지를 내어 함께 아름다운 작품과 경험을 만들어가는 예술적 듀오입니다."
+      },
+      "good_matches": [
+        {
+          "id": "hipster_bear",
+          "name": "힙스터곰치형",
+          "percentage": 86,
+          "reason": "예술적 감각과 창의성으로 서로를 영감을 주는 문화적 동반자 관계"
+        },
+        {
+          "id": "adventure_rabbit",
+          "name": "모험토끼형",
+          "percentage": 74,
+          "reason": "자유로운 영혼끼리 서로의 독창성을 존중하고 응원하는 관계"
+        }
+      ],
+      "challenging_match": {
+        "id": "sharp_wolf",
+        "name": "까칠늑대형",
+        "percentage": 42,
+        "reason": "감성적 표현과 논리적 사고의 차이가 있지만, 서로 다른 강점으로 배울 점이 많습니다."
+      }
     }
   },
   {
@@ -141,6 +281,34 @@
       "primary": "#34495E",
       "secondary": "#95A5A6",
       "accent": "#3498DB"
+    },
+    "compatibility": {
+      "best_match": {
+        "id": "adventure_rabbit",
+        "name": "모험토끼형",
+        "percentage": 89,
+        "reason": "리더십과 무한한 에너지가 만나 함께 목표를 달성해나가는 최강의 파워 커플입니다."
+      },
+      "good_matches": [
+        {
+          "id": "urban_fox",
+          "name": "도심여우형",
+          "percentage": 85,
+          "reason": "도시적 감각과 현실적 사고로 서로를 자극하는 야심찬 관계"
+        },
+        {
+          "id": "hipster_bear",
+          "name": "힙스터곰치형",
+          "percentage": 71,
+          "reason": "독립성과 개성을 인정하며 서로의 영역을 존중하는 관계"
+        }
+      ],
+      "challenging_match": {
+        "id": "sweet_penguin",
+        "name": "스위트펭귄형",
+        "percentage": 41,
+        "reason": "직설적인 성향과 배려심 깊은 성향의 차이가 있지만, 서로를 보완할 수 있는 관계입니다."
+      }
     }
   },
   {
@@ -165,6 +333,34 @@
       "primary": "#3498DB",
       "secondary": "#ECF0F1",
       "accent": "#E74C3C"
+    },
+    "compatibility": {
+      "best_match": {
+        "id": "iron_bear",
+        "name": "철벽곰형",
+        "percentage": 91,
+        "reason": "공감 능력과 보호 본능이 완벽하게 조화를 이루어 서로를 아끼고 돌보는 이상적인 관계입니다."
+      },
+      "good_matches": [
+        {
+          "id": "coffee_cat",
+          "name": "커피고양이형",
+          "percentage": 88,
+          "reason": "따뜻함과 배려심으로 서로에게 편안함을 주는 힐링 관계"
+        },
+        {
+          "id": "hipster_bear",
+          "name": "힙스터곰치형",
+          "percentage": 79,
+          "reason": "균형감과 공감 능력으로 서로를 이해하고 지지하는 관계"
+        }
+      ],
+      "challenging_match": {
+        "id": "sharp_wolf",
+        "name": "까칠늑대형",
+        "percentage": 41,
+        "reason": "감정적 접근과 논리적 접근의 차이가 있지만, 서로 다른 방식으로 성장할 수 있습니다."
+      }
     }
   },
   {
@@ -189,6 +385,34 @@
       "primary": "#8E44AD",
       "secondary": "#2C3E50",
       "accent": "#E67E22"
+    },
+    "compatibility": {
+      "best_match": {
+        "id": "pixie_butterfly",
+        "name": "픽시버터플라이형",
+        "percentage": 86,
+        "reason": "예술적 감각과 창의성이 완벽하게 어우러져 함께 문화적 가치를 창조해나가는 세련된 커플입니다."
+      },
+      "good_matches": [
+        {
+          "id": "coffee_cat",
+          "name": "커피고양이형",
+          "percentage": 82,
+          "reason": "감성과 창의성의 조화로 서로를 영감을 주는 예술적 관계"
+        },
+        {
+          "id": "sweet_penguin",
+          "name": "스위트펭귄형",
+          "percentage": 79,
+          "reason": "균형감과 따뜻함으로 서로를 이해하고 지지하는 안정적 관계"
+        }
+      ],
+      "challenging_match": {
+        "id": "adventure_rabbit",
+        "name": "모험토끼형",
+        "percentage": 48,
+        "reason": "신중함과 즉흥성의 차이가 있지만, 서로 다른 에너지로 새로운 자극을 줄 수 있습니다."
+      }
     }
   }
 ]
