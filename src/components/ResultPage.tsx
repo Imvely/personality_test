@@ -7,7 +7,6 @@ import { TestResult } from '@/types';
 import { analytics, abTestManager } from '@/utils/analytics';
 import { useRouter } from 'next/navigation';
 import ShareButtons from '@/components/ShareButtons';
-import PremiumUpgrade from '@/components/PremiumUpgrade';
 
 const ResultContainer = styled.div`
   min-height: 100vh;
@@ -248,7 +247,6 @@ const ResultPage: React.FC = () => {
   const router = useRouter();
   const [result, setResult] = useState<TestResult | null>(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [isPremiumUser, setIsPremiumUser] = useState(false);
 
   useEffect(() => {
     analytics.trackPageView('result');
@@ -262,12 +260,6 @@ const ResultPage: React.FC = () => {
       router.push('/');
     }
 
-    // 프리미엄 구매 상태 확인
-    const premiumStatus = localStorage.getItem('premiumPurchased');
-    if (premiumStatus) {
-      const premium = JSON.parse(premiumStatus);
-      setIsPremiumUser(premium.status === 'completed');
-    }
   }, [router]);
 
   const handleRestart = () => {
@@ -378,17 +370,6 @@ const ResultPage: React.FC = () => {
             characterEmoji={characterEmoji}
           />
 
-          {!isPremiumUser && <PremiumUpgrade archetype={archetype} />}
-
-          {isPremiumUser && (
-            <SecondaryInfo accentColor={archetype.colors.accent}>
-              <SecondaryTitle>🎉 프리미엄 회원</SecondaryTitle>
-              <SecondaryText>
-                프리미엄 리포트를 구매해주셔서 감사합니다!<br />
-                위의 상세 분석이 도움이 되셨기를 바라요.
-              </SecondaryText>
-            </SecondaryInfo>
-          )}
 
           <RestartButton
             onClick={handleRestart}

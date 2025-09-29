@@ -213,7 +213,33 @@ const TestPage: React.FC = () => {
   }, [currentQuestionIndex]);
 
   const handleAnswerSelect = (answer: 'A' | 'B') => {
+    // 이미 답변이 선택되어 있으면 무시 (중복 클릭 방지)
+    if (selectedAnswer) return;
+
     setSelectedAnswer(answer);
+
+    const questionTime = Date.now() - questionStartTime;
+    analytics.trackQuestionAnswered(
+      questions[currentQuestionIndex].id,
+      answer,
+      questionTime
+    );
+
+    const newAnswer: UserAnswer = {
+      questionId: questions[currentQuestionIndex].id,
+      answer: answer
+    };
+
+    const updatedAnswers = [...answers, newAnswer];
+    setAnswers(updatedAnswers);
+
+    // 즉시 다음 질문으로 넘어가기
+    if (currentQuestionIndex < questions.length - 1) {
+      setCurrentQuestionIndex(currentQuestionIndex + 1);
+      setSelectedAnswer(null);
+    } else {
+      handleTestComplete(updatedAnswers);
+    }
   };
 
   const handleNext = () => {
@@ -245,9 +271,13 @@ const TestPage: React.FC = () => {
   const handlePrevious = () => {
     if (currentQuestionIndex > 0) {
       setCurrentQuestionIndex(currentQuestionIndex - 1);
+      // 이전 질문의 답변이 있다면 복원
       const previousAnswer = answers[currentQuestionIndex - 1];
       setSelectedAnswer(previousAnswer?.answer || null);
-      setAnswers(answers.slice(0, -1));
+      // 현재 질문의 답변이 저장되어 있다면 제거
+      if (answers.length > currentQuestionIndex) {
+        setAnswers(answers.slice(0, currentQuestionIndex));
+      }
     }
   };
 
@@ -384,14 +414,7 @@ const TestPage: React.FC = () => {
             이전
           </NavButton>
 
-          <NavButton
-            disabled={!selectedAnswer}
-            onClick={handleNext}
-            whileHover={{ scale: !selectedAnswer ? 1 : 1.05 }}
-            whileTap={{ scale: !selectedAnswer ? 1 : 0.95 }}
-          >
-            {currentQuestionIndex === questions.length - 1 ? '완료' : '다음'}
-          </NavButton>
+          <div style={{ width: '100px' }}></div> {/* 이전 버튼과 균형을 맞추기 위한 빈 공간 */}
         </NavigationContainer>
       </TestCard>
     </TestContainer>
