@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  basePath: '/personality-test',
+  assetPrefix: '/personality-test',
   experimental: {
     appDir: true,
   },
