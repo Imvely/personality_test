@@ -3,7 +3,8 @@ import { Question, TraitType } from '@/types';
 
 export async function loadQuestions(): Promise<Question[]> {
   try {
-    const response = await fetch('/text/questions_mapping.csv');
+    const basePath = process.env.NODE_ENV === 'production' ? '/personality-test' : '';
+    const response = await fetch(`${basePath}/text/questions_mapping.csv`);
     if (!response.ok) {
       throw new Error('Failed to load questions');
     }
@@ -30,7 +31,8 @@ export async function loadQuestions(): Promise<Question[]> {
 // 최대 점수 데이터 로드
 export async function loadMaxScores(): Promise<{ [key: string]: number }> {
   try {
-    const response = await fetch('/text/trait_max_possible.csv');
+    const basePath = process.env.NODE_ENV === 'production' ? '/personality-test' : '';
+    const response = await fetch(`${basePath}/text/trait_max_possible.csv`);
     if (!response.ok) {
       throw new Error('Failed to load max scores');
     }

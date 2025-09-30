@@ -24,7 +24,8 @@ export async function loadArchetypeData(): Promise<ArchetypeData[]> {
   }
 
   try {
-    const response = await fetch('/text/archetypes_summary.csv');
+    const basePath = process.env.NODE_ENV === 'production' ? '/personality-test' : '';
+    const response = await fetch(`${basePath}/text/archetypes_summary.csv`);
     if (!response.ok) {
       throw new Error('Failed to load archetype data');
     }

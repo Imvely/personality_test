@@ -38,7 +38,8 @@ export async function loadCompatibilityData(): Promise<any> {
   }
 
   try {
-    const response = await fetch('/text/compatibility_top3_by_type.json');
+    const basePath = process.env.NODE_ENV === 'production' ? '/personality-test' : '';
+    const response = await fetch(`${basePath}/text/compatibility_top3_by_type.json`);
     if (!response.ok) {
       throw new Error('Failed to load compatibility data');
     }

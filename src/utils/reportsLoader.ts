@@ -25,7 +25,8 @@ export async function loadDeepReports(): Promise<{ [key: string]: string }> {
   }
 
   try {
-    const response = await fetch('/text/deep_reports.json');
+    const basePath = process.env.NODE_ENV === 'production' ? '/personality-test' : '';
+    const response = await fetch(`${basePath}/text/deep_reports.json`);
     if (!response.ok) {
       throw new Error('Failed to load deep reports');
     }
