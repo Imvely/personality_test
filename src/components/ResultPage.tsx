@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { motion } from 'framer-motion';
+import Head from 'next/head';
 import { TestResult } from '@/types';
 import { analytics, abTestManager } from '@/utils/analytics';
 import { useRouter } from 'next/navigation';
@@ -13,6 +14,7 @@ import {
   getCompatibilityMessage as getNewCompatibilityMessage,
   getCompatibilityEmoji
 } from '@/utils/compatibilityLoader';
+import { getArchetypeScores, ArchetypeScores } from '@/utils/archetypeLoader';
 
 const ResultContainer = styled.div`
   min-height: 100vh;
@@ -30,22 +32,27 @@ const ResultCard = styled(motion.div)<{ primaryColor: string }>`
   padding: 40px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
   border: 3px solid ${props => props.primaryColor};
-  max-width: 800px;
+  max-width: 900px;
   width: 100%;
-  margin-bottom: 30px;
+  margin: 0 auto 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
 
   @media (max-width: 768px) {
     padding: 25px 20px;
     border-radius: 20px;
-    margin: 15px;
+    margin: 15px auto;
     width: calc(100% - 30px);
+    max-width: calc(100% - 30px);
   }
 
   @media (max-width: 480px) {
     padding: 20px 15px;
     border-radius: 15px;
-    margin: 10px;
+    margin: 10px auto;
     width: calc(100% - 20px);
+    max-width: calc(100% - 20px);
   }
 `;
 
@@ -95,11 +102,35 @@ const Hook = styled(motion.p)<{ secondaryColor: string }>`
 `;
 
 const Summary = styled(motion.div)`
+  position: relative;
   font-size: 1.2rem;
-  color: #555;
+  color: #444;
   line-height: 1.8;
   text-align: left;
   margin-bottom: 40px;
+  padding: 25px;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.9) 100%);
+  border-radius: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(10px);
+
+  &::after {
+    content: '';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(45deg, #ff6b6b, #feca57);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.2); opacity: 1; }
+  }
   white-space: pre-line;
 
   @media (max-width: 768px) {
@@ -113,6 +144,7 @@ const TraitContainer = styled(motion.div)`
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 20px;
   margin-bottom: 40px;
+  width: 100%;
 
   @media (max-width: 768px) {
     grid-template-columns: repeat(2, 1fr);
@@ -173,6 +205,7 @@ const SecondaryInfo = styled(motion.div)<{ accentColor: string }>`
   padding: 25px;
   margin-bottom: 30px;
   border: 2px solid ${props => props.accentColor}40;
+  width: 100%;
 
   @media (max-width: 768px) {
     padding: 20px;
@@ -199,6 +232,8 @@ const ActionContainer = styled.div`
   flex-direction: column;
   gap: 20px;
   align-items: center;
+  width: 100%;
+  margin-top: 20px;
 `;
 
 const RestartButton = styled(motion.button)`
@@ -225,6 +260,7 @@ const CompatibilitySection = styled(motion.div)<{ accentColor: string }>`
   margin: 30px 0;
   border-left: 5px solid ${props => props.accentColor};
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  width: 100%;
 
   @media (max-width: 768px) {
     padding: 20px;
@@ -233,11 +269,16 @@ const CompatibilitySection = styled(motion.div)<{ accentColor: string }>`
 `;
 
 const CompatibilityTitle = styled.h3`
+  position: relative;
   color: #333;
   font-size: 1.8rem;
   font-weight: 700;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   text-align: center;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, rgba(255, 182, 193, 0.3), rgba(255, 240, 245, 0.5));
+  border-radius: 25px;
+  border: 2px solid rgba(255, 192, 203, 0.4);
 
   @media (max-width: 768px) {
     font-size: 1.5rem;
@@ -276,25 +317,37 @@ const MatchReason = styled.p`
 
 const GoodMatchesList = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 15px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
   margin: 20px 0;
+  width: 100%;
 
-  @media (max-width: 768px) {
-    grid-template-columns: 1fr;
+  @media (max-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
     gap: 12px;
   }
 
+  @media (max-width: 768px) {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
   @media (max-width: 480px) {
-    gap: 10px;
+    gap: 12px;
   }
 `;
 
 const GoodMatchCard = styled(motion.div)`
-  background: rgba(255, 255, 255, 0.7);
-  border-radius: 10px;
-  padding: 15px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 15px;
+  padding: 20px;
   border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 `;
 
 const RelationshipDetailsSection = styled.div`
@@ -372,14 +425,19 @@ const ResultPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [deepReport, setDeepReport] = useState<string>('');
   const [compatibility, setCompatibility] = useState<any[]>([]);
+  const [archetypeScores, setArchetypeScores] = useState<ArchetypeScores | null>(null);
 
   useEffect(() => {
     async function loadResultData() {
       analytics.trackPageView('result');
 
       const savedResult = localStorage.getItem('testResult');
+      console.log('Checking for saved result:', !!savedResult);
+
       if (savedResult) {
+        console.log('Found saved result:', savedResult);
         const parsedResult = JSON.parse(savedResult) as TestResult;
+        console.log('Parsed result:', parsedResult);
         setResult(parsedResult);
 
         try {
@@ -394,6 +452,10 @@ const ResultPage: React.FC = () => {
           // 궁합 데이터 로드
           const compatibilityData = await getNewCompatibilityInfo(parsedResult.archetype.id);
           setCompatibility(compatibilityData);
+
+          // 캐릭터별 실제 특성 점수 로드
+          const scores = await getArchetypeScores(parsedResult.archetype.id);
+          setArchetypeScores(scores);
         } catch (error) {
           console.error('Failed to load additional data:', error);
         }
@@ -428,7 +490,29 @@ const ResultPage: React.FC = () => {
   const characterEmoji = getCharacterEmoji(archetype.id);
 
   return (
-    <ResultContainer>
+    <>
+      <Head>
+        <title>{archetype.name} | 성격 유형 테스트 결과</title>
+        <meta name="description" content={`당신은 ${archetype.name}입니다! ${archetype.hook}`} />
+
+        {/* Open Graph 메타태그 */}
+        <meta property="og:title" content={`나는 ${archetype.name}! 🔮`} />
+        <meta property="og:description" content={`${archetype.hook} 나의 성격 유형을 확인해보세요!`} />
+        <meta property="og:image" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/api/og-image?character=${archetype.id}`} />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content={`${typeof window !== 'undefined' ? window.location.href : ''}`} />
+        <meta property="og:site_name" content="Personality Test" />
+
+        {/* Twitter 메타태그 */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`나는 ${archetype.name}! 🔮`} />
+        <meta name="twitter:description" content={`${archetype.hook} 나의 성격 유형을 확인해보세요!`} />
+        <meta name="twitter:image" content={`${typeof window !== 'undefined' ? window.location.origin : ''}/api/og-image?character=${archetype.id}`} />
+      </Head>
+
+      <ResultContainer>
       <ResultCard
         primaryColor={archetype.colors.primary}
         initial={{ opacity: 0, y: 50 }}
@@ -467,7 +551,38 @@ const ResultPage: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9 }}
         >
-          {deepReport || archetype.short_summary}
+          <div style={{
+            fontSize: '1.8rem',
+            fontWeight: '700',
+            marginBottom: '20px',
+            textAlign: 'center',
+            padding: '15px 20px',
+            background: 'linear-gradient(135deg, rgba(255, 182, 193, 0.3), rgba(255, 240, 245, 0.5))',
+            borderRadius: '25px',
+            border: '2px solid rgba(255, 192, 203, 0.4)',
+            color: '#333'
+          }}>
+            🔮 당신의 성격 리포트
+          </div>
+          <div style={{
+            fontSize: '1.15rem',
+            lineHeight: '1.7',
+            color: '#555'
+          }}>
+            {deepReport || archetype.short_summary}
+          </div>
+          <div style={{
+            marginTop: '20px',
+            padding: '15px',
+            background: 'rgba(255, 255, 255, 0.6)',
+            borderRadius: '12px',
+            borderLeft: '4px solid #ff6b6b',
+            fontSize: '1rem',
+            color: '#666',
+            fontStyle: 'italic'
+          }}>
+            💝 이 결과는 당신만의 특별한 매력을 담고 있어요!
+          </div>
         </Summary>
 
         <TraitContainer
@@ -475,7 +590,7 @@ const ResultPage: React.FC = () => {
           animate={{ opacity: 1 }}
           transition={{ delay: 1.1 }}
         >
-          {Object.entries(scores).map(([trait, score], index) => (
+          {Object.entries(archetypeScores || scores).map(([trait, score], index) => (
             <TraitItem key={trait} primaryColor={archetype.colors.primary}>
               <TraitName>{traitNames[trait as keyof typeof traitNames]}</TraitName>
               <TraitScore primaryColor={archetype.colors.primary}>
@@ -493,12 +608,71 @@ const ResultPage: React.FC = () => {
           ))}
         </TraitContainer>
 
+        {/* 궁합 정보 섹션 - 퍼센트 이미지 바로 아래로 이동 */}
+        {compatibility.length > 0 && (
+          <CompatibilitySection
+            accentColor={archetype.colors.accent}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.6 }}
+          >
+            <CompatibilityTitle>💖 나와 잘 맞는 친구들</CompatibilityTitle>
+
+            <GoodMatchesList>
+              {compatibility.map((match, index) => (
+                <GoodMatchCard
+                  key={match.target}
+                  whileHover={{ scale: 1.05 }}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1.7 + index * 0.1 }}
+                >
+                    <span style={{ fontSize: '1.5rem', marginBottom: '8px', display: 'block' }}>
+                      {getCompatibilityEmoji(match.compat_percent)}
+                    </span>
+                    <MatchName style={{ fontSize: '1.2rem', marginBottom: '8px' }}>
+                      {match.targetName}
+                    </MatchName>
+                    <MatchPercentage
+                      color={archetype.colors.primary}
+                      style={{ fontSize: '1.8rem', margin: '8px 0' }}
+                    >
+                      {match.compat_percent}%
+                    </MatchPercentage>
+                    <MatchReason style={{ fontSize: '0.95rem', lineHeight: '1.5', marginBottom: '10px' }}>
+                      {match.explanation}
+                    </MatchReason>
+                    <div style={{
+                      fontSize: '0.85rem',
+                      color: archetype.colors.accent,
+                      fontWeight: '600'
+                    }}>
+                      {getNewCompatibilityMessage(match.compat_percent)}
+                    </div>
+                </GoodMatchCard>
+              ))}
+            </GoodMatchesList>
+
+            <div style={{
+              textAlign: 'center',
+              marginTop: '20px',
+              padding: '15px',
+              background: 'rgba(255, 255, 255, 0.5)',
+              borderRadius: '15px',
+              fontSize: '0.9rem',
+              color: '#666'
+            }}>
+              💡 친구들과 테스트 결과를 공유해서 궁합을 확인해보세요!
+            </div>
+          </CompatibilitySection>
+        )}
+
         {secondaryArchetype && (
           <SecondaryInfo
             accentColor={archetype.colors.accent}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.5 }}
+            transition={{ delay: 2.0 }}
           >
             <SecondaryTitle>보조 성향</SecondaryTitle>
             <SecondaryText>
@@ -511,71 +685,9 @@ const ResultPage: React.FC = () => {
         <ActionContainer>
           <ShareButtons
             archetype={archetype}
-            scores={scores}
+            scores={archetypeScores || scores}
             characterEmoji={characterEmoji}
           />
-
-          {/* 궁합 정보 섹션 */}
-          {compatibility.length > 0 && (
-            <CompatibilitySection
-              accentColor={archetype.colors.accent}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.5 }}
-            >
-              <CompatibilityTitle>💖 나와 잘 맞는 친구들</CompatibilityTitle>
-
-              <GoodMatchesList>
-                {compatibility.map((match, index) => (
-                  <GoodMatchCard
-                    key={match.target}
-                    whileHover={{ scale: 1.05 }}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 0.6 + index * 0.1 }}
-                  >
-                    <div style={{ textAlign: 'center' }}>
-                      <span style={{ fontSize: '1.5rem', marginBottom: '8px', display: 'block' }}>
-                        {getCompatibilityEmoji(match.compat_percent)}
-                      </span>
-                      <MatchName style={{ fontSize: '1.2rem', marginBottom: '8px' }}>
-                        {match.targetName}
-                      </MatchName>
-                      <MatchPercentage
-                        color={archetype.colors.primary}
-                        style={{ fontSize: '1.8rem', margin: '8px 0' }}
-                      >
-                        {match.compat_percent}%
-                      </MatchPercentage>
-                      <MatchReason style={{ fontSize: '0.9rem', lineHeight: '1.4' }}>
-                        {match.explanation}
-                      </MatchReason>
-                      <div style={{
-                        marginTop: '10px',
-                        fontSize: '0.8rem',
-                        color: archetype.colors.accent,
-                        fontWeight: '600'
-                      }}>
-                        {getNewCompatibilityMessage(match.compat_percent)}
-                      </div>
-                    </div>
-                  </GoodMatchCard>
-                ))}
-              </GoodMatchesList>
-
-              <div style={{
-                textAlign: 'center',
-                marginTop: '20px',
-                padding: '15px',
-                background: 'rgba(255, 255, 255, 0.5)',
-                borderRadius: '15px',
-                fontSize: '0.9rem',
-                color: '#666'
-              }}>
-                💡 친구들과 테스트 결과를 공유해서 궁합을 확인해보세요!
-              </div>
-            </CompatibilitySection>
-          )}
 
           <RestartButton
             onClick={handleRestart}
@@ -587,6 +699,7 @@ const ResultPage: React.FC = () => {
         </ActionContainer>
       </ResultCard>
     </ResultContainer>
+    </>
   );
 };
 

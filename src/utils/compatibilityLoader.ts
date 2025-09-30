@@ -1,10 +1,9 @@
-import { parseCSV } from './csvParser';
-
 export interface CompatibilityData {
   target: string;
   compat_percent: number;
   explanation: string;
-  rank: number;
+  rank?: number;
+  targetName?: string;
 }
 
 // 아키타입 한글명을 ID로 매핑
@@ -31,27 +30,25 @@ const idToNameMapping: { [key: string]: string } = {
   'hipster_bear': '힙스터곰치형'
 };
 
-let compatibilityCache: any[] | null = null;
+let compatibilityCache: any | null = null;
 
-export async function loadCompatibilityData(): Promise<any[]> {
+export async function loadCompatibilityData(): Promise<any> {
   if (compatibilityCache) {
     return compatibilityCache;
   }
 
   try {
-    const response = await fetch('/text/compatibility_top3.csv');
+    const response = await fetch('/text/compatibility_top3_by_type.json');
     if (!response.ok) {
       throw new Error('Failed to load compatibility data');
     }
 
-    const csvText = await response.text();
-    const data = parseCSV(csvText);
-
-    compatibilityCache = data;
-    return data;
+    const jsonData = await response.json();
+    compatibilityCache = jsonData;
+    return jsonData;
   } catch (error) {
     console.error('Error loading compatibility data:', error);
-    return [];
+    return {};
   }
 }
 
@@ -60,20 +57,17 @@ export async function getCompatibilityInfo(archetypeId: string): Promise<Compati
     const data = await loadCompatibilityData();
     const archetypeName = idToNameMapping[archetypeId];
 
-    if (!archetypeName) {
+    if (!archetypeName || !data[archetypeName]) {
       return [];
     }
 
-    const matches = data
-      .filter(row => row.source === archetypeName)
-      .map(row => ({
-        target: nameToIdMapping[row.target] || row.target,
-        targetName: row.target,
-        compat_percent: row.compat_percent,
-        explanation: row.explanation,
-        rank: row.rank
-      }))
-      .sort((a, b) => a.rank - b.rank);
+    const matches = data[archetypeName].map((match: any, index: number) => ({
+      target: nameToIdMapping[match.target] || match.target,
+      targetName: match.target,
+      compat_percent: match.compat_percent,
+      explanation: match.explanation,
+      rank: index + 1
+    }));
 
     return matches;
   } catch (error) {

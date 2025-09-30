@@ -330,7 +330,16 @@ const TestPage: React.FC = () => {
       }, 2000);
     } catch (error) {
       console.error('Failed to score answers:', error);
-      // 에러 처리 - 사용자에게 알림
+      console.error('Error details:', {
+        message: error instanceof Error ? error.message : 'Unknown error',
+        stack: error instanceof Error ? error.stack : null,
+        answersCount: finalAnswers.length,
+        questionsCount: questions.length,
+        answers: finalAnswers
+      });
+
+      // 에러 알림 표시
+      alert(`테스트 결과를 계산하는 중 오류가 발생했습니다: ${error instanceof Error ? error.message : 'Unknown error'}`);
       setIsLoading(false);
     }
   };

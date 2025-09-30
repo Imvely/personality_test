@@ -1,9 +1,25 @@
 import { Question, UserAnswer, TraitScores, NormalizedScores, Archetype, TestResult } from '@/types';
 
-import archetypesData from '@/data/archetypes.json';
 import { loadMaxScores } from './questionsLoader';
+import { loadArchetypeData, ArchetypeData } from './archetypeLoader';
 
 const TRAITS = ['extroversion', 'adventure', 'stability', 'empathy', 'creativity'] as const;
+
+// 캐릭터별 색상 매핑
+function getArchetypeColors(archetypeId: string) {
+  const colorMap: { [key: string]: { primary: string; secondary: string; accent: string } } = {
+    coffee_cat: { primary: '#8B4513', secondary: '#D2691E', accent: '#F4A460' },
+    urban_fox: { primary: '#FF4500', secondary: '#FF6347', accent: '#FFA500' },
+    adventure_rabbit: { primary: '#32CD32', secondary: '#98FB98', accent: '#ADFF2F' },
+    iron_bear: { primary: '#696969', secondary: '#A9A9A9', accent: '#C0C0C0' },
+    pixie_butterfly: { primary: '#FF69B4', secondary: '#FFB6C1', accent: '#FFC0CB' },
+    grumpy_wolf: { primary: '#2F4F4F', secondary: '#708090', accent: '#778899' },
+    sweet_penguin: { primary: '#4169E1', secondary: '#87CEEB', accent: '#B0E0E6' },
+    hipster_bear: { primary: '#8A2BE2', secondary: '#9370DB', accent: '#DDA0DD' }
+  };
+
+  return colorMap[archetypeId] || { primary: '#667eea', secondary: '#764ba2', accent: '#f093fb' };
+}
 
 export async function calculateTraitScores(answers: UserAnswer[], questions: Question[]): Promise<TraitScores> {
   const scores: TraitScores = {
@@ -51,9 +67,9 @@ export function calculateActualMaxScores(questions: Question[]): TraitScores {
   return maxScores;
 }
 
-export async function normalizeScores(traitScores: TraitScores, questions: Question[]): Promise<NormalizedScores> {
-  // CSV에서 불러온 최대 점수 대신 실제 계산된 최대 점수 사용
-  const maxScores = calculateActualMaxScores(questions);
+export async function normalizeScores(traitScores: TraitScores): Promise<NormalizedScores> {
+  // trait_max_possible.csv에서 최대 점수 로드
+  const maxScores = await loadMaxScores();
 
   const normalized: NormalizedScores = {
     extroversion: Math.min(100, Math.max(0, Math.round((traitScores.extroversion / maxScores.extroversion) * 100))),
@@ -77,45 +93,84 @@ export function calculateEuclideanDistance(scores: NormalizedScores, prototype: 
   return Math.sqrt(diffSquared);
 }
 
-export function findMatchingArchetype(normalizedScores: NormalizedScores): TestResult {
-  const archetypes = archetypesData as Archetype[];
+export async function findMatchingArchetype(normalizedScores: NormalizedScores): Promise<TestResult> {
+  const archetypeData = await loadArchetypeData();
 
-  let best = null;
-  let minDist = Infinity;
+  let bestArchetype: ArchetypeData | null = null;
+  let minDistance = Infinity;
 
-  archetypes.forEach(archetype => {
-    let dist = 0;
-    TRAITS.forEach(trait => {
-      const diff = normalizedScores[trait] - archetype.prototype[trait];
-      dist += diff * diff;
-    });
-    dist = Math.sqrt(dist);
+  archetypeData.forEach(archetype => {
+    const [extroversion, adventure, creativity, empathy, stability] = archetype.prototype;
 
-    if (dist < minDist) {
-      minDist = dist;
-      best = archetype;
+    // 유클리디안 거리 계산
+    const distance = Math.sqrt(
+      Math.pow(normalizedScores.extroversion - extroversion, 2) +
+      Math.pow(normalizedScores.adventure - adventure, 2) +
+      Math.pow(normalizedScores.creativity - creativity, 2) +
+      Math.pow(normalizedScores.empathy - empathy, 2) +
+      Math.pow(normalizedScores.stability - stability, 2)
+    );
+
+    if (distance < minDistance) {
+      minDistance = distance;
+      bestArchetype = archetype;
     }
   });
 
-  if (!best) {
+  if (!bestArchetype) {
     throw new Error('No matching archetype found');
   }
 
+  // 타입 확정을 위한 단언
+  const selectedArchetype = bestArchetype as ArchetypeData;
+
+  // archetype 데이터를 기존 형식으로 변환
   const result: TestResult = {
-    archetype: best,
+    archetype: {
+      id: selectedArchetype.id,
+      name: selectedArchetype.name,
+      colors: getArchetypeColors(selectedArchetype.id),
+      hook: selectedArchetype.hook,
+      short_summary: selectedArchetype.short,
+      paid_report: '', // CSV에서는 제공되지 않는 필드
+      image_prompts: {
+        avatar: '',
+        og: '',
+        story: ''
+      }, // CSV에서는 제공되지 않는 필드
+      prototype: {
+        extroversion: selectedArchetype.prototype[0],
+        adventure: selectedArchetype.prototype[1],
+        creativity: selectedArchetype.prototype[2],
+        empathy: selectedArchetype.prototype[3],
+        stability: selectedArchetype.prototype[4]
+      }
+    },
     scores: normalizedScores,
-    distance: minDist
+    distance: minDistance
   };
 
   return result;
 }
 
 export async function scoreAnswers(answers: UserAnswer[], questions: Question[]): Promise<TestResult> {
-  const traitScores = await calculateTraitScores(answers, questions);
-  const normalizedScores = await normalizeScores(traitScores, questions);
-  const result = findMatchingArchetype(normalizedScores);
+  try {
+    console.log('Starting scoreAnswers with:', { answersCount: answers.length, questionsCount: questions.length });
 
-  return result;
+    const traitScores = await calculateTraitScores(answers, questions);
+    console.log('Calculated trait scores:', traitScores);
+
+    const normalizedScores = await normalizeScores(traitScores);
+    console.log('Normalized scores:', normalizedScores);
+
+    const result = await findMatchingArchetype(normalizedScores);
+    console.log('Found matching archetype:', result.archetype.id);
+
+    return result;
+  } catch (error) {
+    console.error('Error in scoreAnswers:', error);
+    throw error;
+  }
 }
 
 export function getTraitIntensity(score: number): 'low' | 'medium' | 'high' {
