@@ -28,8 +28,17 @@ const MainCard = styled(motion.div)`
   width: 100%;
 
   @media (max-width: 768px) {
-    padding: 40px 30px;
+    padding: 35px 25px;
     border-radius: 20px;
+    margin: 15px;
+    width: calc(100% - 30px);
+  }
+
+  @media (max-width: 480px) {
+    padding: 30px 20px;
+    border-radius: 15px;
+    margin: 10px;
+    width: calc(100% - 20px);
   }
 `;
 
@@ -41,10 +50,15 @@ const Title = styled(motion.h1)`
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 20px;
-  line-height: 1.2;
+  line-height: 1.3;
 
   @media (max-width: 768px) {
-    font-size: 2.5rem;
+    font-size: 2.2rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.9rem;
+    line-height: 1.4;
   }
 `;
 
@@ -56,6 +70,10 @@ const Subtitle = styled(motion.p)`
 
   @media (max-width: 768px) {
     font-size: 1.1rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
   }
 `;
 
@@ -93,8 +111,15 @@ const StartButton = styled(motion.button)`
   }
 
   @media (max-width: 768px) {
-    padding: 18px 40px;
+    padding: 18px 35px;
     font-size: 1.1rem;
+    border-radius: 40px;
+  }
+
+  @media (max-width: 480px) {
+    padding: 16px 30px;
+    font-size: 1rem;
+    border-radius: 35px;
   }
 `;
 
@@ -122,12 +147,21 @@ const FeatureItem = styled(motion.div)`
 const FeatureIcon = styled.div`
   font-size: 2.5rem;
   margin-bottom: 10px;
+
+  @media (max-width: 480px) {
+    font-size: 2rem;
+    margin-bottom: 8px;
+  }
 `;
 
 const FeatureText = styled.p`
   font-size: 0.9rem;
   color: #666;
   font-weight: 500;
+
+  @media (max-width: 480px) {
+    font-size: 0.8rem;
+  }
 `;
 
 const containerVariants = {
@@ -174,16 +208,15 @@ const LandingPage: React.FC = () => {
       >
         <Title variants={itemVariants}>
           60초 안에 알아보는<br />
-          나의 캐릭터 ✨
+          나의 동물 캐릭터 ✨
         </Title>
 
         <Subtitle variants={itemVariants}>
-          MZ세대를 위한 퍼스널 심리테스트
+          나의 성격을 귀여운 동물로 찾아보자!
         </Subtitle>
 
         <Description variants={itemVariants}>
-          간단한 선택으로 당신의 성격을 동물 캐릭터로 표현해보세요.<br />
-          친구들과 공유하고 비교해보는 재미까지!
+          30가지 질문으로 알아보는 나만의 동물 친구 ✨
         </Description>
 
         <StartButton
@@ -192,27 +225,8 @@ const LandingPage: React.FC = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.98 }}
         >
-          테스트 시작하기 🚀
+          나의 동물친구 찾으러 가기! 🐱
         </StartButton>
-
-        <FeatureList variants={itemVariants}>
-          <FeatureItem>
-            <FeatureIcon>⏱️</FeatureIcon>
-            <FeatureText>60초 완성</FeatureText>
-          </FeatureItem>
-          <FeatureItem>
-            <FeatureIcon>🎯</FeatureIcon>
-            <FeatureText>정확한 분석</FeatureText>
-          </FeatureItem>
-          <FeatureItem>
-            <FeatureIcon>🎨</FeatureIcon>
-            <FeatureText>감성적 결과</FeatureText>
-          </FeatureItem>
-          <FeatureItem>
-            <FeatureIcon>📱</FeatureIcon>
-            <FeatureText>SNS 공유</FeatureText>
-          </FeatureItem>
-        </FeatureList>
       </MainCard>
     </LandingContainer>
   );
