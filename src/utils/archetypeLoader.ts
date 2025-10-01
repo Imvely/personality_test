@@ -58,6 +58,7 @@ export async function getArchetypeScores(archetypeId: string): Promise<Archetype
       return null;
     }
 
+    // prototype 순서: [외향, 모험, 창의, 공감, 안정]
     const [extroversion, adventure, creativity, empathy, stability] = archetype.prototype;
 
     return {

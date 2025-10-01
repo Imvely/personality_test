@@ -63,6 +63,7 @@ export interface TestResult {
   archetype: Archetype;
   scores: NormalizedScores;
   distance: number;
+  similarityPercent?: number;
   secondaryArchetype?: Archetype;
   secondaryDistance?: number;
 }
