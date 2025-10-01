@@ -139,6 +139,42 @@ const Summary = styled(motion.div)`
   }
 `;
 
+const SectionTitle = styled.div`
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  text-align: center;
+  padding: 15px 20px;
+  background: linear-gradient(135deg, rgba(255, 182, 193, 0.3), rgba(255, 240, 245, 0.5));
+  border-radius: 25px;
+  border: 2px solid rgba(255, 192, 203, 0.4);
+  color: #333;
+
+  @media (max-width: 768px) {
+    font-size: 1.2rem;
+    padding: 12px 15px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.1rem;
+    padding: 10px 12px;
+  }
+`;
+
+const SectionContent = styled.div`
+  font-size: 1.15rem;
+  line-height: 1.7;
+  color: #555;
+
+  @media (max-width: 768px) {
+    font-size: 1.05rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+  }
+`;
+
 const TraitContainer = styled(motion.div)`
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -281,7 +317,13 @@ const CompatibilityTitle = styled.h3`
   border: 2px solid rgba(255, 192, 203, 0.4);
 
   @media (max-width: 768px) {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
+    padding: 12px 15px;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.1rem;
+    padding: 10px 12px;
   }
 `;
 
@@ -551,26 +593,12 @@ const ResultPage: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.9 }}
         >
-          <div style={{
-            fontSize: '1.8rem',
-            fontWeight: '700',
-            marginBottom: '20px',
-            textAlign: 'center',
-            padding: '15px 20px',
-            background: 'linear-gradient(135deg, rgba(255, 182, 193, 0.3), rgba(255, 240, 245, 0.5))',
-            borderRadius: '25px',
-            border: '2px solid rgba(255, 192, 203, 0.4)',
-            color: '#333'
-          }}>
+          <SectionTitle>
             🔮 당신의 성격 리포트
-          </div>
-          <div style={{
-            fontSize: '1.15rem',
-            lineHeight: '1.7',
-            color: '#555'
-          }}>
+          </SectionTitle>
+          <SectionContent>
             {deepReport || archetype.short_summary}
-          </div>
+          </SectionContent>
           <div style={{
             marginTop: '20px',
             padding: '15px',
