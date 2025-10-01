@@ -4,14 +4,14 @@ import { NextRequest } from 'next/server';
 export const runtime = 'edge';
 
 const characterEmojis = {
-  coffee_cat: '☕🐱',
-  urban_fox: '🦊🏙️',
-  adventure_rabbit: '🐰⛰️',
-  iron_bear: '🐻⚡',
-  pixie_butterfly: '🦋✨',
-  grumpy_wolf: '🐺😤',
-  sweet_penguin: '🐧💖',
-  hipster_bear: '🐻🎭'
+  coffee_cat: '🐱',
+  urban_fox: '🦊',
+  adventure_rabbit: '🐰',
+  iron_bear: '🐻',
+  pixie_butterfly: '🦋',
+  grumpy_wolf: '🐺',
+  sweet_penguin: '🐧',
+  hipster_bear: '🐻‍❄️'
 };
 
 const characterNames = {
@@ -40,8 +40,9 @@ export async function GET(request: NextRequest) {
   try {
     const { searchParams } = new URL(request.url);
     const characterId = searchParams.get('character') || 'coffee_cat';
+    const customEmoji = searchParams.get('emoji'); // URL에서 이모지 파라미터 받기
 
-    const emoji = characterEmojis[characterId as keyof typeof characterEmojis] || '🐱☕';
+    const emoji = customEmoji || characterEmojis[characterId as keyof typeof characterEmojis] || '🐱';
     const name = characterNames[characterId as keyof typeof characterNames] || '커피고양이형';
     const colors = characterColors[characterId as keyof typeof characterColors] || characterColors.coffee_cat;
 
@@ -119,15 +120,14 @@ export async function GET(request: NextRequest) {
               border: `4px solid ${colors.accent}`,
             }}
           >
-            {/* 캐릭터 이모지 */}
+            {/* 캐릭터 이모지 - 훨씬 더 크게 */}
             <div
               style={{
-                fontSize: '120px',
-                marginBottom: '20px',
-                background: `linear-gradient(45deg, ${colors.primary}, ${colors.accent})`,
-                borderRadius: '50%',
-                padding: '30px',
-                boxShadow: '0 10px 30px rgba(0, 0, 0, 0.2)',
+                fontSize: '200px',
+                marginBottom: '30px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
               {emoji}

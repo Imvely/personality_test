@@ -119,34 +119,44 @@ const CopiedMessage = styled(motion.div)`
 
 const ShareButtons: React.FC<ShareButtonsProps> = ({ archetype, scores, characterEmoji }) => {
   const generateShareText = () => {
-    const shareVariants = [
-      `나는 ${archetype.name}이라고 나왔는데 ${characterEmoji} 진짜 소름돋게 맞음... 너도 해봐`,
-      `${archetype.name} ${characterEmoji} 이거 나 맞냐고 ㅋㅋㅋ ${archetype.hook} 완전 공감`,
-      `심리테스트 결과: ${archetype.name} ${characterEmoji}\n${archetype.hook}\n이거 왜 이렇게 정확해??`,
-      `${characterEmoji} ${archetype.name} 나왔는데 진짜 찐이다... 60초면 끝나니까 너도 ㄱㄱ`,
-      `결과보고 헉소리남 ㅋㅋ ${archetype.name} ${characterEmoji}\n"${archetype.hook}"\n이건 완전 나잖아?`
-    ];
+    // hook과 short 내용을 포함한 공유 텍스트
+    return `${characterEmoji} 나는 ${archetype.name}!
 
-    const randomVariant = shareVariants[Math.floor(Math.random() * shareVariants.length)];
-    return `${randomVariant}\n\n60초만에 알아보는 나의 캐릭터 테스트 👇`;
+${archetype.hook}
+
+${archetype.short_summary}
+
+60초만에 알아보는 나의 캐릭터 테스트 👇`;
   };
 
   const generateHashtags = () => {
     return `#${archetype.name} #심리테스트 #성격테스트 #인스타감성 #퍼스널테스트`;
   };
 
-  const shareUrl = typeof window !== 'undefined' ? window.location.origin : '';
+  // basePath를 포함한 전체 URL
+  const getShareUrl = () => {
+    if (typeof window === 'undefined') return '';
+    const origin = window.location.origin;
+    const basePath = process.env.NODE_ENV === 'production' ? '/personality-test' : '';
+    return `${origin}${basePath}`;
+  };
+
+  const shareUrl = getShareUrl();
 
   const handleKakaoShare = () => {
     analytics.trackResultShared(archetype.id, 'kakao');
 
     if (typeof window !== 'undefined' && (window as any).Kakao) {
+      const origin = window.location.origin;
+      const basePath = process.env.NODE_ENV === 'production' ? '/personality-test' : '';
+      const ogImageUrl = `${origin}${basePath}/api/og-image?character=${archetype.id}&emoji=${encodeURIComponent(characterEmoji)}`;
+
       (window as any).Kakao.Share.sendDefault({
         objectType: 'feed',
         content: {
-          title: `나는 ${archetype.name}!`,
-          description: archetype.hook,
-          imageUrl: `${shareUrl}/og-${archetype.id}.jpg`,
+          title: `${characterEmoji} 나는 ${archetype.name}!`,
+          description: `${archetype.hook}\n\n${archetype.short_summary}`,
+          imageUrl: ogImageUrl,
           link: {
             mobileWebUrl: shareUrl,
             webUrl: shareUrl,
